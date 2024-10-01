@@ -1,6 +1,7 @@
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import SearchBar from './components/SearchBar';
+import Playlist from './components/Playlist';
 
 export default function HomePage() {
   return (
@@ -10,7 +11,7 @@ export default function HomePage() {
           <Navbar />
           <div className="main__centerblock centerblock">
             <SearchBar />
-            {/* ДЛЯ СЛЕД ДЗ */}
+            <Playlist />
           </div>
           <Sidebar />
         </main>

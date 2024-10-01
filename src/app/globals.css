@@ -83,36 +83,26 @@ body {
 }
 
 .main {
-  -webkit-box-flex: 1;
-  -ms-flex: 1 1 auto;
-  flex: 1 1 auto;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
   justify-content: space-between;
+  align-items: stretch;
+  height: 100vh; /* Высота на 100% от высоты окна */
+  flex-wrap: nowrap; /* Убираем перенос строк */
 }
 
 .main__nav {
-  width: 244px;
-  background-color: #181818;
-  padding: 20px 0 20px 36px;
+  width: 15%; /* Ширина Navbar занимает 15% от ширины экрана */
+  min-width: 200px; /* Минимальная ширина, чтобы не сжиматься слишком сильно */
 }
 
 .main__centerblock {
-  width: auto;
-  -webkit-box-flex: 3;
-  -ms-flex-positive: 3;
-  flex-grow: 3;
-  padding: 20px 40px 20px 111px;
+  flex-grow: 1; /* Занимает всё оставшееся пространство */
+  padding: 20px 5%; /* Отступы с использованием процентов */
 }
 
 .main__sidebar {
-  max-width: 418px;
-  padding: 20px 90px 20px 78px;
+  width: 20%; /* Ширина Sidebar занимает 20% от ширины экрана */
+  min-width: 250px; /* Минимальная ширина для Sidebar */
 }
 
 .nav__logo {
@@ -174,18 +164,10 @@ body {
 }
 
 .centerblock__search {
-  width: 100%;
+  width: 100%; /* Занимает всю ширину родительского блока */
   border-bottom: 1px solid #4e4e4e;
-  margin-bottom: 51px;
-  display: -webkit-box;
-  display: -ms-flexbox;
+  margin-bottom: 20px;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
 }
 
@@ -213,13 +195,8 @@ body {
 }
 
 .centerblock__content {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+  flex-grow: 1; /* Контент занимает оставшееся пространство */
+  overflow-y: auto; /* Прокрутка для длинного контента */
 }
 
 .search__svg {
