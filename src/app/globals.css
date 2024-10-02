@@ -306,6 +306,28 @@ body {
   overflow-y: auto;
 }
 
+.playlist {
+  display: flex;
+  overflow-x: auto; /* Горизонтальная прокрутка */
+  white-space: nowrap; /* Элементы не переносятся на новую строку */
+  scroll-behavior: smooth; /* Плавная прокрутка */
+}
+
+.playlist__item {
+  flex: 0 0 auto; /* Элементы не сжимаются */
+  width: 200px; /* Ширина каждого элемента */
+  margin-right: 10px; /* Отступ между элементами */
+}
+
+/* Скроем стандартные полосы прокрутки */
+.playlist::-webkit-scrollbar {
+  display: none;
+}
+.playlist {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
 .playlist-title__col {
   font-style: normal;
   font-weight: 400;
