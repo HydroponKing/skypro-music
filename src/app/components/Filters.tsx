@@ -12,6 +12,7 @@ const Filters: React.FC<FiltersProps> = ({ authors, releaseDates, genres }) => {
   const [openFilter, setOpenFilter] = useState<null | 'author' | 'releaseDate' | 'genre'>(null);
   const filtersRef = useRef<HTMLDivElement | null>(null);
 
+  // Закрыть список при клике вне его
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (filtersRef.current && !filtersRef.current.contains(event.target as Node)) {
@@ -34,7 +35,7 @@ const Filters: React.FC<FiltersProps> = ({ authors, releaseDates, genres }) => {
         {/* Контейнер для кнопки и списка "Исполнителю" */}
         <div style={{ position: 'relative', display: 'inline-block' }}>
           <div
-            className="filter__button button-author _btn-text"
+            className={`filter__button button-author _btn-text ${openFilter === 'author' ? 'active' : ''}`}
             onClick={() => setOpenFilter(openFilter === 'author' ? null : 'author')}
           >
             исполнителю
@@ -51,7 +52,7 @@ const Filters: React.FC<FiltersProps> = ({ authors, releaseDates, genres }) => {
         {/* Контейнер для кнопки и списка "Году выпуска" */}
         <div style={{ position: 'relative', display: 'inline-block', marginLeft: '16px' }}>
           <div
-            className="filter__button button-year _btn-text"
+            className={`filter__button button-year _btn-text ${openFilter === 'releaseDate' ? 'active' : ''}`}
             onClick={() => setOpenFilter(openFilter === 'releaseDate' ? null : 'releaseDate')}
           >
             году выпуска
@@ -68,7 +69,7 @@ const Filters: React.FC<FiltersProps> = ({ authors, releaseDates, genres }) => {
         {/* Контейнер для кнопки и списка "Жанру" */}
         <div style={{ position: 'relative', display: 'inline-block', marginLeft: '16px' }}>
           <div
-            className="filter__button button-genre _btn-text"
+            className={`filter__button button-genre _btn-text ${openFilter === 'genre' ? 'active' : ''}`}
             onClick={() => setOpenFilter(openFilter === 'genre' ? null : 'genre')}
           >
             жанру
@@ -85,6 +86,5 @@ const Filters: React.FC<FiltersProps> = ({ authors, releaseDates, genres }) => {
     </div>
   );
 };
-
 
 export default Filters;

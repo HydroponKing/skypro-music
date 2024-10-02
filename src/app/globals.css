@@ -275,6 +275,14 @@ body {
   padding: 6px 20px;
 }
 
+/* Стиль для активной кнопки */
+.filter__button.active {
+  border-color: #ad61ff; /* Изменяем цвет рамки */
+  color: #ad61ff; /* Изменяем цвет текста */
+  background-color: #282828; /* Можно добавить фон для активной кнопки */
+}
+
+
 .filter__button:not(:last-child) {
   margin-right: 10px;
 }
