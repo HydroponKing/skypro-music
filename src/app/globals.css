@@ -295,36 +295,45 @@ body {
   margin-bottom: 24px;
 }
 
+/* Вертикальная прокрутка для контейнера с треками */
 .content__playlist {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  overflow-y: auto;
+  max-height: 630px; /* Задаем фиксированную высоту для контейнера */
+  overflow-y: auto; /* Добавляем вертикальную прокрутку */
+  padding-right: 10px; /* Небольшой отступ, чтобы не обрезалась правая сторона */
 }
 
+/* Скрываем вертикальную полосу прокрутки */
+.content__playlist::-webkit-scrollbar {
+  display: none;
+}
+
+.content__playlist {
+  -ms-overflow-style: none; /* IE и Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Элементы списка треков располагаются вертикально */
+.playlist__item {
+  margin-bottom: 12px; /* Отступ между треками */
+}
+
+/* Горизонтальная прокрутка для контейнера с треками */
 .playlist {
   display: flex;
-  overflow-x: auto; /* Горизонтальная прокрутка */
-  white-space: nowrap; /* Элементы не переносятся на новую строку */
+  flex-wrap: nowrap;
+  overflow-x: auto; /* Включаем горизонтальную прокрутку */
+  overflow-y: hidden; /* Отключаем вертикальную прокрутку */
+  white-space: nowrap; /* Элементы в строке */
   scroll-behavior: smooth; /* Плавная прокрутка */
+  padding-bottom: 10px; /* Небольшой отступ снизу для удобства */
 }
 
-.playlist__item {
-  flex: 0 0 auto; /* Элементы не сжимаются */
-  width: 200px; /* Ширина каждого элемента */
-  margin-right: 10px; /* Отступ между элементами */
-}
-
-/* Скроем стандартные полосы прокрутки */
+/* Скрытие стандартных полос прокрутки */
 .playlist::-webkit-scrollbar {
   display: none;
 }
 .playlist {
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  -ms-overflow-style: none;  /* IE и Edge */
   scrollbar-width: none;  /* Firefox */
 }
 

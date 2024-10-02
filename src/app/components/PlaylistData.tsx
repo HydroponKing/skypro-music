@@ -1,29 +1,31 @@
- "use client"
+"use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
-//интерфейс для трека
+// Интерфейс для трека
 interface Track {
-    _id: number;
-    name: string;
-    author: string;
-    release_date: string;
-    genre: string[];
-    duration_in_seconds: number;
-    album: string;
-    logo: {
-      type: string;
-      data: any[]; // Тут скорее всего массив байтов, для упрощения оставим как any[], позже уточним структуру. Понимаю что лучше рабоать без any но тут я думаю это не критично ^^
-    };
-    track_file: string;
-    staredUser: number[];
-  }
+  _id: number;
+  name: string;
+  author: string;
+  release_date: string;
+  genre: string[];
+  duration_in_seconds: number;
+  album: string;
+  logo: {
+    type: string;
+    data: any[];
+  };
+  track_file: string;
+  staredUser: number[];
+}
 
 export const PlaylistData = () => {
   const [tracks, setTrack] = useState<Track[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+
+  const playlistRef = useRef<HTMLDivElement | null>(null); // для прокрутки
 
   useEffect(() => {
     const fetchTracks = async () => {
@@ -42,15 +44,35 @@ export const PlaylistData = () => {
     fetchTracks();
   }, []);
 
+  // Своровал код полностью с интернета хз как это работает но работает ^^
+  useEffect(() => {
+    const handleScroll = (e: WheelEvent) => {
+      if (playlistRef.current) {
+        playlistRef.current.scrollTop += e.deltaY; 
+      }
+    };
+
+    const playlistElement = playlistRef.current;
+    if (playlistElement) {
+      playlistElement.addEventListener("wheel", handleScroll);
+    }
+
+    return () => {
+      if (playlistElement) {
+        playlistElement.removeEventListener("wheel", handleScroll);
+      }
+    };
+  }, []);
+
   if (loading) {
-    return <div>Loading...</div> //колхоз пока, далее заменим на скелетон ^^
+    return <div>Loading...</div>; // можно заменить на скелетон
   }
   if (error) {
-    return <div>Error: {error.message} </div>
+    return <div>Error: {error.message}</div>;
   }
 
   return (
-    <div className="content__playlist playlist">
+    <div className="content__playlist" ref={playlistRef}>
       {tracks.map((track) => (
         <div key={track._id} className="playlist__item">
           <div className="playlist__track track">
@@ -61,17 +83,25 @@ export const PlaylistData = () => {
                 </svg>
               </div>
               <div className="track__title-text">
-                <a className="track__title-link" href={track.track_file}>{track.name}</a>
+                <a className="track__title-link" href={track.track_file}>
+                  {track.name}
+                </a>
               </div>
             </div>
             <div className="track__author">
-              <a className="track__author-link" href="#">{track.author}</a>
+              <a className="track__author-link" href="#">
+                {track.author}
+              </a>
             </div>
             <div className="track__album">
-              <a className="track__album-link" href="#">{track.album}</a>
+              <a className="track__album-link" href="#">
+                {track.album}
+              </a>
             </div>
             <div className="track__time">
-              <span className="track__time-text">{formatDuration(track.duration_in_seconds)}</span>
+              <span className="track__time-text">
+                {formatDuration(track.duration_in_seconds)}
+              </span>
             </div>
           </div>
         </div>
@@ -81,14 +111,14 @@ export const PlaylistData = () => {
 };
 
 const formatDuration = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
-  };
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+};
 
 const handleError = (err: unknown): Error => {
-    if (err instanceof Error) {
-      return err;
-    }
-    return new Error('Произошла неизвестная ошибка');
-  };
+  if (err instanceof Error) {
+    return err;
+  }
+  return new Error("Произошла неизвестная ошибка");
+};
