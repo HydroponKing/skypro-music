@@ -19,53 +19,60 @@ const Filters: React.FC<FiltersProps> = ({ authors, releaseDates, genres }) => {
       <div className="centerblock__filter filter">
         <div className="filter__title">Искать по:</div>
         
-        {/* Кнопка "Исполнителю" */}
-        <div
-          className="filter__button button-author _btn-text"
-          onClick={() => setShowAuthors(!showAuthors)}
-        >
-          исполнителю
+        {/* Контейнер для кнопки и списка "Исполнителю" */}
+        <div style={{ position: 'relative', display: 'inline-block' }}>
+          <div
+            className="filter__button button-author _btn-text"
+            onClick={() => setShowAuthors(!showAuthors)}
+          >
+            исполнителю
+          </div>
+          {showAuthors && (
+            <ul className="filter__list">
+              {authors.map((author) => (
+                <li key={author}>{author}</li>
+              ))}
+            </ul>
+          )}
         </div>
-        {showAuthors && (
-          <ul className="filter__list">
-            {authors.map((author) => (
-              <li key={author}>{author}</li>
-            ))}
-          </ul>
-        )}
 
-        {/* Кнопка "Году выпуска" */}
-        <div
-          className="filter__button button-year _btn-text"
-          onClick={() => setShowReleaseDates(!showReleaseDates)}
-        >
-          году выпуска
+        {/* Контейнер для кнопки и списка "Году выпуска" */}
+        <div style={{ position: 'relative', display: 'inline-block', marginLeft: '16px' }}>
+          <div
+            className="filter__button button-year _btn-text"
+            onClick={() => setShowReleaseDates(!showReleaseDates)}
+          >
+            году выпуска
+          </div>
+          {showReleaseDates && (
+            <ul className="filter__list">
+              {releaseDates.map((date) => (
+                <li key={date}>{date}</li>
+              ))}
+            </ul>
+          )}
         </div>
-        {showReleaseDates && (
-          <ul className="filter__list">
-            {releaseDates.map((date) => (
-              <li key={date}>{date}</li>
-            ))}
-          </ul>
-        )}
 
-        {/* Кнопка "Жанру" */}
-        <div
-          className="filter__button button-genre _btn-text"
-          onClick={() => setShowGenres(!showGenres)}
-        >
-          жанру
+        {/* Контейнер для кнопки и списка "Жанру" */}
+        <div style={{ position: 'relative', display: 'inline-block', marginLeft: '16px' }}>
+          <div
+            className="filter__button button-genre _btn-text"
+            onClick={() => setShowGenres(!showGenres)}
+          >
+            жанру
+          </div>
+          {showGenres && (
+            <ul className="filter__list">
+              {genres.map((genre) => (
+                <li key={genre}>{genre}</li>
+              ))}
+            </ul>
+          )}
         </div>
-        {showGenres && (
-          <ul className="filter__list">
-            {genres.map((genre) => (
-              <li key={genre}>{genre}</li>
-            ))}
-          </ul>
-        )}
       </div>
     </div>
   );
 };
+
 
 export default Filters;

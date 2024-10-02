@@ -278,6 +278,49 @@ body {
   margin-right: 10px;
 }
 
+.filter__list {
+  position: absolute; /* Чтобы список появлялся под кнопкой */
+  top: 100%; /* Список будет под кнопкой */
+  left: 0;
+  background-color: #1C1C1C; /* Цвет фона */
+  border-radius: 12px;
+  padding: 10px;
+  max-height: 150px; /* Ограничиваем высоту для вертикальной прокрутки */
+  width: 200px; /* Ширина списка */
+  overflow-y: auto; /* Вертикальная прокрутка */
+  overflow-x: hidden; /* Отключаем горизонтальную прокрутку */
+  scrollbar-width: thin; /* Узкая полоса прокрутки */
+}
+
+.filter__list::-webkit-scrollbar {
+  width: 6px; /* Ширина полосы прокрутки */
+}
+
+.filter__list::-webkit-scrollbar-thumb {
+  background-color: #6D6D6D; /* Цвет полосы прокрутки */
+  border-radius: 10px;
+}
+
+/* Стили для элементов списка */
+.filter__list li {
+  list-style: none; /* Убираем маркеры списка */
+  font-family: 'StratosSkyeng', sans-serif; /* Устанавливаем шрифт */
+  font-size: 20px; /* Размер шрифта */
+  font-weight: 400; /* Толщина шрифта */
+  line-height: 24px; /* Высота строки */
+  letter-spacing: 0; /* Без увеличения межбуквенного расстояния */
+  color: #FFFFFF; /* Белый текст */
+  text-align: left; /* Выравнивание по левому краю */
+  cursor: pointer;
+  padding: 4px 0; /* Отступ между элементами */
+}
+
+.filter__list li:hover {
+  color: #AC00FF; /* Цвет текста при наведении */
+  text-decoration: underline; /* Подчеркивание при наведении */
+}
+
+
 .content__title {
   display: -webkit-box;
   display: -ms-flexbox;
