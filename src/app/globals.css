@@ -97,7 +97,6 @@ body {
 
 .main__centerblock {
   flex-grow: 1; /* Занимает всё оставшееся пространство */
-  padding: 20px 5%; /* Отступы с использованием процентов */
 }
 
 .main__sidebar {
