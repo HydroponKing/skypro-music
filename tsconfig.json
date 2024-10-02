@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "target": "es2015",               // Поддержка стандартов ES2015 и выше
+    "lib": ["dom", "es2015"],         // Библиотеки, которые будут подключены
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
