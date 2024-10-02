@@ -13,7 +13,6 @@ export default function HomePage() {
           <Navbar />
           <div className="main__centerblock centerblock">
             <SearchBar />
-            <Filters></Filters>
             <Playlist />
           </div>
           <Sidebar />

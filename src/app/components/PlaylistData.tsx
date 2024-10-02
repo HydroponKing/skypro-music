@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import Filters from "./Filters";
 
 // Интерфейс для трека
 interface Track {
@@ -21,9 +22,12 @@ interface Track {
 }
 
 export const PlaylistData = () => {
-  const [tracks, setTrack] = useState<Track[]>([]);
+  const [tracks, setTracks] = useState<Track[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  const [authors, setAuthors] = useState<string[]>([]);
+  const [releaseDates, setReleaseDates] = useState<string[]>([]);
+  const [genres, setGenres] = useState<string[]>([]);
 
   const playlistRef = useRef<HTMLDivElement | null>(null); // для прокрутки
 
@@ -33,7 +37,18 @@ export const PlaylistData = () => {
         const response = await axios.get(
           "https://webdev-music-003b5b991590.herokuapp.com/catalog/track/all/"
         );
-        setTrack(response.data.data);
+        const trackData: Track[] = response.data.data;
+        setTracks(trackData);
+
+        // Получение уникальных значений для авторов, годов и жанров
+        const uniqueAuthors = [...new Set(trackData.map((track: Track) => track.author))];
+        const uniqueReleaseDates = [...new Set(trackData.map((track: Track) => track.release_date))];
+        const uniqueGenres = [...new Set(trackData.flatMap((track: Track) => track.genre))];
+
+        setAuthors(uniqueAuthors);
+        setReleaseDates(uniqueReleaseDates);
+        setGenres(uniqueGenres);
+
         setLoading(false);
       } catch (err: unknown) {
         setError(handleError(err));
@@ -63,49 +78,55 @@ export const PlaylistData = () => {
       }
     };
   }, []);
+  //непонятный код кончается :)
 
   if (loading) {
-    return <div>Loading...</div>; // можно заменить на скелетон
+    return <div>Loading...</div>; // потом заменим на скелетон yesyes
   }
   if (error) {
     return <div>Error: {error.message}</div>;
   }
 
-  return (
-    <div className="content__playlist" ref={playlistRef}>
-      {tracks.map((track) => (
-        <div key={track._id} className="playlist__item">
-          <div className="playlist__track track">
-            <div className="track__title">
-              <div className="track__title-image">
-                <svg className="track__title-svg">
-                  <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
-                </svg>
+    return (
+    <div>
+      {/* Передаем массивы в компонент Filters */}
+      <Filters authors={authors} releaseDates={releaseDates} genres={genres} />
+
+      <div className="content__playlist" ref={playlistRef}>
+        {tracks.map((track) => (
+          <div key={track._id} className="playlist__item">
+            <div className="playlist__track track">
+              <div className="track__title">
+                <div className="track__title-image">
+                  <svg className="track__title-svg">
+                    <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
+                  </svg>
+                </div>
+                <div className="track__title-text">
+                  <a className="track__title-link" href={track.track_file}>
+                    {track.name}
+                  </a>
+                </div>
               </div>
-              <div className="track__title-text">
-                <a className="track__title-link" href={track.track_file}>
-                  {track.name}
+              <div className="track__author">
+                <a className="track__author-link" href="#">
+                  {track.author}
                 </a>
               </div>
-            </div>
-            <div className="track__author">
-              <a className="track__author-link" href="#">
-                {track.author}
-              </a>
-            </div>
-            <div className="track__album">
-              <a className="track__album-link" href="#">
-                {track.album}
-              </a>
-            </div>
-            <div className="track__time">
-              <span className="track__time-text">
-                {formatDuration(track.duration_in_seconds)}
-              </span>
+              <div className="track__album">
+                <a className="track__album-link" href="#">
+                  {track.album}
+                </a>
+              </div>
+              <div className="track__time">
+                <span className="track__time-text">
+                  {formatDuration(track.duration_in_seconds)}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
