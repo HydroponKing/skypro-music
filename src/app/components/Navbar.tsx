@@ -25,18 +25,18 @@ export default function Navbar() {
       </div>
       {isMenuViseble && (
         <div className="nav__menu menu">
-          <ul className="menu__list">
-            <li className="menu__item">
-              <Link href="#">Главное</Link>
-            </li>
-            <li className="menu__item">
-              <Link href="#">Мой плейлист</Link>
-            </li>
-            <li className="menu__item">
-              <Link href="/signin">Войти</Link>
-            </li>
-          </ul>
-        </div>
+        <ul className="menu__list">
+          <li className="menu__item">
+            <Link href="#" className="menu__link">Главное</Link>
+          </li>
+          <li className="menu__item">
+            <Link href="#" className="menu__link">Мои треки</Link>
+          </li>
+          <li className="menu__item">
+            <Link href="/logout" className="menu__link">Выйти</Link>
+          </li>
+        </ul>
+      </div>
       )}
     </nav>
   );

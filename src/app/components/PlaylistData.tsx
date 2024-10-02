@@ -41,9 +41,15 @@ export const PlaylistData = () => {
         setTracks(trackData);
 
         // Получение уникальных значений для авторов, годов и жанров
-        const uniqueAuthors = [...new Set(trackData.map((track: Track) => track.author))];
-        const uniqueReleaseDates = [...new Set(trackData.map((track: Track) => track.release_date))];
-        const uniqueGenres = [...new Set(trackData.flatMap((track: Track) => track.genre))];
+        const uniqueAuthors = [
+          ...new Set(trackData.map((track: Track) => track.author)),
+        ];
+        const uniqueReleaseDates = [
+          ...new Set(trackData.map((track: Track) => track.release_date)),
+        ];
+        const uniqueGenres = [
+          ...new Set(trackData.flatMap((track: Track) => track.genre)),
+        ];
 
         setAuthors(uniqueAuthors);
         setReleaseDates(uniqueReleaseDates);
@@ -63,7 +69,7 @@ export const PlaylistData = () => {
   useEffect(() => {
     const handleScroll = (e: WheelEvent) => {
       if (playlistRef.current) {
-        playlistRef.current.scrollTop += e.deltaY; 
+        playlistRef.current.scrollTop += e.deltaY;
       }
     };
 
@@ -81,17 +87,25 @@ export const PlaylistData = () => {
   //непонятный код кончается :)
 
   if (loading) {
-    return <div>Loading...</div>; // потом заменим на скелетон yesyes
+    return <div>Loading...</div>; // потом заменим на скелетон
   }
   if (error) {
     return <div>Error: {error.message}</div>;
   }
 
-    return (
+  return (
     <div>
-      {/* Передаем массивы в компонент Filters */}
       <Filters authors={authors} releaseDates={releaseDates} genres={genres} />
-
+      <div className="content__title playlist-title">
+        <div className="playlist-title__col col01">Трек</div>
+        <div className="playlist-title__col col02">Исполнитель</div>
+        <div className="playlist-title__col col03">Альбом</div>
+        <div className="playlist-title__col col04">
+          <svg className="playlist-title__svg">
+            <use xlinkHref="/img/icon/sprite.svg#icon-watch"></use>
+          </svg>
+        </div>
+      </div>
       <div className="content__playlist" ref={playlistRef}>
         {tracks.map((track) => (
           <div key={track._id} className="playlist__item">
@@ -118,6 +132,7 @@ export const PlaylistData = () => {
                   {track.album}
                 </a>
               </div>
+
               <div className="track__time">
                 <span className="track__time-text">
                   {formatDuration(track.duration_in_seconds)}

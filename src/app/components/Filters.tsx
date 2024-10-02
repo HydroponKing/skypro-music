@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 interface FiltersProps {
   authors: string[];
@@ -9,12 +9,24 @@ interface FiltersProps {
 }
 
 const Filters: React.FC<FiltersProps> = ({ authors, releaseDates, genres }) => {
-  const [showAuthors, setShowAuthors] = useState(false);
-  const [showReleaseDates, setShowReleaseDates] = useState(false);
-  const [showGenres, setShowGenres] = useState(false);
+  const [openFilter, setOpenFilter] = useState<null | 'author' | 'releaseDate' | 'genre'>(null);
+  const filtersRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (filtersRef.current && !filtersRef.current.contains(event.target as Node)) {
+        setOpenFilter(null); // Закрыть все фильтры
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
-    <div>
+    <div ref={filtersRef}>
       <h2 className="centerblock__h2">Треки</h2>
       <div className="centerblock__filter filter">
         <div className="filter__title">Искать по:</div>
@@ -23,11 +35,11 @@ const Filters: React.FC<FiltersProps> = ({ authors, releaseDates, genres }) => {
         <div style={{ position: 'relative', display: 'inline-block' }}>
           <div
             className="filter__button button-author _btn-text"
-            onClick={() => setShowAuthors(!showAuthors)}
+            onClick={() => setOpenFilter(openFilter === 'author' ? null : 'author')}
           >
             исполнителю
           </div>
-          {showAuthors && (
+          {openFilter === 'author' && (
             <ul className="filter__list">
               {authors.map((author) => (
                 <li key={author}>{author}</li>
@@ -40,11 +52,11 @@ const Filters: React.FC<FiltersProps> = ({ authors, releaseDates, genres }) => {
         <div style={{ position: 'relative', display: 'inline-block', marginLeft: '16px' }}>
           <div
             className="filter__button button-year _btn-text"
-            onClick={() => setShowReleaseDates(!showReleaseDates)}
+            onClick={() => setOpenFilter(openFilter === 'releaseDate' ? null : 'releaseDate')}
           >
             году выпуска
           </div>
-          {showReleaseDates && (
+          {openFilter === 'releaseDate' && (
             <ul className="filter__list">
               {releaseDates.map((date) => (
                 <li key={date}>{date}</li>
@@ -57,11 +69,11 @@ const Filters: React.FC<FiltersProps> = ({ authors, releaseDates, genres }) => {
         <div style={{ position: 'relative', display: 'inline-block', marginLeft: '16px' }}>
           <div
             className="filter__button button-genre _btn-text"
-            onClick={() => setShowGenres(!showGenres)}
+            onClick={() => setOpenFilter(openFilter === 'genre' ? null : 'genre')}
           >
             жанру
           </div>
-          {showGenres && (
+          {openFilter === 'genre' && (
             <ul className="filter__list">
               {genres.map((genre) => (
                 <li key={genre}>{genre}</li>

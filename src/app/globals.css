@@ -93,6 +93,7 @@ body {
 .main__nav {
   width: 15%; /* Ширина Navbar занимает 15% от ширины экрана */
   min-width: 200px; /* Минимальная ширина, чтобы не сжиматься слишком сильно */
+  padding: 16px 0 0 16px;
 }
 
 .main__centerblock {
@@ -147,7 +148,7 @@ body {
 }
 
 .menu__list {
-  padding: 18px 0 10px 0;
+  padding: 18px 0 0 0;
 }
 
 .menu__item {
