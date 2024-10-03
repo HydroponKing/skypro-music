@@ -62,26 +62,6 @@ export const PlaylistData = () => {
     getTracks();
   }, []);
 
-  // Своровал код полностью с интернета хз как это работает но работает ^^
-  useEffect(() => {
-    const handleScroll = (e: WheelEvent) => {
-      if (playlistRef.current) {
-        playlistRef.current.scrollTop += e.deltaY;
-      }
-    };
-
-    const playlistElement = playlistRef.current;
-    if (playlistElement) {
-      playlistElement.addEventListener("wheel", handleScroll);
-    }
-
-    return () => {
-      if (playlistElement) {
-        playlistElement.removeEventListener("wheel", handleScroll);
-      }
-    };
-  }, []);
-  //непонятный код кончается :)
 
   if (error) {
     return <div>Error: {error.message}</div>;
