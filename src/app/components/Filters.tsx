@@ -41,12 +41,15 @@ const Filters: React.FC<FiltersProps> = ({ authors, releaseDates, genres }) => {
             исполнителю
           </div>
           {openFilter === 'author' && (
-            <ul className="filter__list">
-              {authors.map((author) => (
-                <li key={author}>{author}</li>
-              ))}
-            </ul>
-          )}
+  <div className="filter__list-container">
+    <ul className="filter__list">
+      {authors.map((author) => (
+        <li key={author}>{author}</li>
+      ))}
+    </ul>
+  </div>
+)}
+
         </div>
 
         {/* Контейнер для кнопки и списка "Году выпуска" */}
@@ -58,11 +61,13 @@ const Filters: React.FC<FiltersProps> = ({ authors, releaseDates, genres }) => {
             году выпуска
           </div>
           {openFilter === 'releaseDate' && (
+            <div className="filter__list-container">
             <ul className="filter__list">
               {releaseDates.map((date) => (
                 <li key={date}>{date}</li>
               ))}
             </ul>
+            </div>
           )}
         </div>
 
@@ -75,11 +80,13 @@ const Filters: React.FC<FiltersProps> = ({ authors, releaseDates, genres }) => {
             жанру
           </div>
           {openFilter === 'genre' && (
+            <div className="filter__list-container">
             <ul className="filter__list">
               {genres.map((genre) => (
                 <li key={genre}>{genre}</li>
               ))}
             </ul>
+            </div>
           )}
         </div>
       </div>

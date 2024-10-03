@@ -1,4 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+@font-face {
+  font-family: 'StratosSkyeng';
+  src: url('/fonts/StratosSkyeng.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+
 * {
   margin: 0;
   padding: 0;
@@ -287,39 +296,37 @@ body {
   margin-right: 10px;
 }
 
-.filter__list {
-  position: absolute; /* Чтобы список появлялся под кнопкой */
-  top: 100%; /* Список будет под кнопкой */
-  left: 0;
-  background-color: #1C1C1C; /* Цвет фона */
-  border-radius: 12px;
-  padding: 10px;
-  max-height: 150px; /* Ограничиваем высоту для вертикальной прокрутки */
-  width: 200px; /* Ширина списка */
-  overflow-y: auto; /* Вертикальная прокрутка */
-  overflow-x: hidden; /* Отключаем горизонтальную прокрутку */
-  scrollbar-width: thin; /* Узкая полоса прокрутки */
-  /* Для всех браузеров */
-  scrollbar-width: thin; /* Узкая полоса прокрутки */
-  scrollbar-color: #ffffff transparent; /* Цвет полосы прокрутки и фона */
+.filter__list-container {
+  position: absolute; /* Позиционирование списка поверх кнопки */
+  top: 100%; /* Сдвиг вниз относительно кнопки */
+  left: 0; /* Выравнивание по левому краю кнопки */
+  width: 250px; /* Можно добавить фиксированную ширину, чтобы совпадало с кнопкой */
+  padding: 34px 34px 34px; /* Паддинг вокруг списка */
+  background: rgb(49, 49, 49);
+  border-radius: 12px; /* Закругленные углы */
+  z-index: 10; /* Чтобы список отображался поверх остальных элементов */
 }
 
-/* Для WebKit браузеров (Chrome, Safari, Edge) */
+.filter__list {
+  max-height: 255px; /* Ограничение по высоте */
+  overflow-y: auto; /* Вертикальная прокрутка */
+  overflow-x: hidden; /* Отключаем горизонтальную прокрутку */
+}
+
+/* Настройки для скроллбара */
 .filter__list::-webkit-scrollbar {
-  width: 6px; /* Ширина полосы прокрутки */
-  padding: 0 15px 0 0; /* Смещаем контент, а не сам скроллбар */
+  width: 4px; /* Ширина полосы прокрутки */
 }
 
 .filter__list::-webkit-scrollbar-thumb {
-  background-color: #ffffff; /* Белая полоса прокрутки */
+  background-color: #ffffff; /* Цвет полосы прокрутки */
   border-radius: 10px; /* Закругленные углы */
-  padding: 0 15px 0 0; /* Смещаем контент, а не сам скроллбар */
 }
 
 .filter__list::-webkit-scrollbar-track {
-  background-color: transparent; /* Прозрачный трек (фон) */
-  padding: 0 15px 0 0; /* Смещаем контент, а не сам скроллбар */
+  background: rgb(75, 73, 73);
 }
+
 
 /* Стили для элементов списка */
 .filter__list li {
@@ -332,7 +339,7 @@ body {
   color: #FFFFFF; /* Белый текст */
   text-align: left; /* Выравнивание по левому краю */
   cursor: pointer;
-  padding: 4px 8px; /* Отступ между элементами */
+  padding: 14px 8px; /* Отступ между элементами */
   border-radius: 8px;
 }
 
@@ -340,6 +347,7 @@ body {
   color: #AC00FF; /* Цвет текста при наведении */
   text-decoration: underline; /* Подчеркивание при наведении */
 }
+
 
 
 .content__title {
