@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import Filters from "./Filters";
+import { fetchTracks } from "./api"; // Импортируем функцию из нового файла
 
 // Интерфейс для трека
 interface Track {
@@ -32,12 +32,9 @@ export const PlaylistData = () => {
   const playlistRef = useRef<HTMLDivElement | null>(null); // для прокрутки
 
   useEffect(() => {
-    const fetchTracks = async () => {
+    const getTracks = async () => {
       try {
-        const response = await axios.get(
-          "https://webdev-music-003b5b991590.herokuapp.com/catalog/track/all/"
-        );
-        const trackData: Track[] = response.data.data;
+        const trackData = await fetchTracks(); // Используем новую функцию для запроса данных
         setTracks(trackData);
 
         // Получение уникальных значений для авторов, годов и жанров
@@ -62,7 +59,7 @@ export const PlaylistData = () => {
       }
     };
 
-    fetchTracks();
+    getTracks();
   }, []);
 
   // Своровал код полностью с интернета хз как это работает но работает ^^

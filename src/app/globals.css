@@ -299,15 +299,26 @@ body {
   overflow-y: auto; /* Вертикальная прокрутка */
   overflow-x: hidden; /* Отключаем горизонтальную прокрутку */
   scrollbar-width: thin; /* Узкая полоса прокрутки */
+  /* Для всех браузеров */
+  scrollbar-width: thin; /* Узкая полоса прокрутки */
+  scrollbar-color: #ffffff transparent; /* Цвет полосы прокрутки и фона */
 }
 
+/* Для WebKit браузеров (Chrome, Safari, Edge) */
 .filter__list::-webkit-scrollbar {
   width: 6px; /* Ширина полосы прокрутки */
+  padding: 0 15px 0 0; /* Смещаем контент, а не сам скроллбар */
 }
 
 .filter__list::-webkit-scrollbar-thumb {
-  background-color: #6D6D6D; /* Цвет полосы прокрутки */
-  border-radius: 10px;
+  background-color: #ffffff; /* Белая полоса прокрутки */
+  border-radius: 10px; /* Закругленные углы */
+  padding: 0 15px 0 0; /* Смещаем контент, а не сам скроллбар */
+}
+
+.filter__list::-webkit-scrollbar-track {
+  background-color: transparent; /* Прозрачный трек (фон) */
+  padding: 0 15px 0 0; /* Смещаем контент, а не сам скроллбар */
 }
 
 /* Стили для элементов списка */
@@ -321,7 +332,8 @@ body {
   color: #FFFFFF; /* Белый текст */
   text-align: left; /* Выравнивание по левому краю */
   cursor: pointer;
-  padding: 4px 0; /* Отступ между элементами */
+  padding: 4px 8px; /* Отступ между элементами */
+  border-radius: 8px;
 }
 
 .filter__list li:hover {
