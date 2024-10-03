@@ -83,9 +83,6 @@ export const PlaylistData = () => {
   }, []);
   //непонятный код кончается :)
 
-  if (loading) {
-    return <div>Loading...</div>; // потом заменим на скелетон
-  }
   if (error) {
     return <div>Error: {error.message}</div>;
   }
@@ -104,40 +101,43 @@ export const PlaylistData = () => {
         </div>
       </div>
       <div className="content__playlist" ref={playlistRef}>
-        {tracks.map((track) => (
-          <div key={track._id} className="playlist__item">
-            <div className="playlist__track track">
-              <div className="track__title">
-                <div className="track__title-image">
-                  <svg className="track__title-svg">
-                    <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
-                  </svg>
+        {loading ? (
+          <div>Loading...</div> // Можно заменить на скелетон позже
+        ) : (
+          tracks.map((track) => (
+            <div key={track._id} className="playlist__item">
+              <div className="playlist__track track">
+                <div className="track__title">
+                  <div className="track__title-image">
+                    <svg className="track__title-svg">
+                      <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
+                    </svg>
+                  </div>
+                  <div className="track__title-text">
+                    <a className="track__title-link" href={track.track_file}>
+                      {track.name}
+                    </a>
+                  </div>
                 </div>
-                <div className="track__title-text">
-                  <a className="track__title-link" href={track.track_file}>
-                    {track.name}
+                <div className="track__author">
+                  <a className="track__author-link" href="#">
+                    {track.author}
                   </a>
                 </div>
-              </div>
-              <div className="track__author">
-                <a className="track__author-link" href="#">
-                  {track.author}
-                </a>
-              </div>
-              <div className="track__album">
-                <a className="track__album-link" href="#">
-                  {track.album}
-                </a>
-              </div>
-
-              <div className="track__time">
-                <span className="track__time-text">
-                  {formatDuration(track.duration_in_seconds)}
-                </span>
+                <div className="track__album">
+                  <a className="track__album-link" href="#">
+                    {track.album}
+                  </a>
+                </div>
+                <div className="track__time">
+                  <span className="track__time-text">
+                    {formatDuration(track.duration_in_seconds)}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );
