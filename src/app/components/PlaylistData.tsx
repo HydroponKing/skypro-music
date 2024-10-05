@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import Filters from "./Filters";
 import Player from "./Player"; // Импортируем Player для управления треками
-import { fetchTracks } from "./api"; // Импортируем функцию для получения треков
+import Filters from "./Filters";
+import { fetchTracks } from "./api";
 
 // Интерфейс для трека
 interface Track {
@@ -24,14 +24,12 @@ interface Track {
 
 export const PlaylistData: React.FC = () => {
   const [tracks, setTracks] = useState<Track[]>([]);
+  const [currentTrack, setCurrentTrack] = useState<Track | null>(null); // Состояние для текущего трека
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const [authors, setAuthors] = useState<string[]>([]);
   const [releaseDates, setReleaseDates] = useState<string[]>([]);
   const [genres, setGenres] = useState<string[]>([]);
-  const [currentTrack, setCurrentTrack] = useState<Track | null>(null); // Состояние для текущего трека
-
-  const playlistRef = useRef<HTMLDivElement | null>(null); // для прокрутки
 
   useEffect(() => {
     const getTracks = async () => {
@@ -48,7 +46,7 @@ export const PlaylistData: React.FC = () => {
         setGenres(uniqueGenres);
         setLoading(false);
       } catch (err: unknown) {
-        setError(handleError(err));
+        setError(err instanceof Error ? err : new Error("Произошла неизвестная ошибка"));
         setLoading(false);
       }
     };
@@ -56,13 +54,13 @@ export const PlaylistData: React.FC = () => {
     getTracks();
   }, []);
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
   const handleTrackClick = (track: Track) => {
     setCurrentTrack(track); // Устанавливаем выбранный трек
   };
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <div>
@@ -77,7 +75,7 @@ export const PlaylistData: React.FC = () => {
           </svg>
         </div>
       </div>
-      <div className="content__playlist" ref={playlistRef}>
+      <div className="content__playlist">
         {loading ? (
           <div>Loading...</div>
         ) : (
@@ -104,7 +102,10 @@ export const PlaylistData: React.FC = () => {
                 </div>
                 <div className="track__time">
                   <span className="track__time-text">
-                    {formatDuration(track.duration_in_seconds)}
+                    {Math.floor(track.duration_in_seconds / 60)}:
+                    {track.duration_in_seconds % 60 < 10
+                      ? `0${track.duration_in_seconds % 60}`
+                      : track.duration_in_seconds % 60}
                   </span>
                 </div>
               </div>
@@ -113,21 +114,10 @@ export const PlaylistData: React.FC = () => {
         )}
       </div>
 
-      {/* Компонент Player будет воспроизводить текущий трек */}
-      {currentTrack && <Player currentTrack={currentTrack} />} {/* Передаем текущий выбранный трек */}
+      {/* Player рендерится один раз и обновляет трек при выборе */}
+      <Player currentTrack={currentTrack} />
     </div>
   );
 };
 
-const formatDuration = (seconds: number) => {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-  return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
-};
-
-const handleError = (err: unknown): Error => {
-  if (err instanceof Error) {
-    return err;
-  }
-  return new Error("Произошла неизвестная ошибка");
-};
+export default PlaylistData;

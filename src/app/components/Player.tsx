@@ -7,20 +7,12 @@ interface Track {
   _id: number;
   name: string;
   author: string;
-  release_date: string;
-  genre: string[];
-  duration_in_seconds: number;
-  album: string;
-  logo: {
-    type: string;
-    data: any[];
-  };
   track_file: string;
-  staredUser: number[];
+  album: string;
 }
 
 interface PlayerProps {
-  currentTrack: Track | null; // Принимаем текущий выбранный трек, который может быть null
+  currentTrack: Track | null;
 }
 
 const Player: React.FC<PlayerProps> = ({ currentTrack }) => {
@@ -28,86 +20,68 @@ const Player: React.FC<PlayerProps> = ({ currentTrack }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.5);
-  const [isLiked, setIsLiked] = useState(false); // Для отслеживания состояния лайка
-  const [isDisliked, setIsDisliked] = useState(false); // Для отслеживания состояния дизлайка
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Воспроизведение/пауза трека
   const togglePlay = () => {
-    if (!audioRef.current) return;
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
+    if (audioRef.current) {
+      isPlaying ? audioRef.current.pause() : audioRef.current.play();
+      setIsPlaying(!isPlaying);
     }
-    setIsPlaying(!isPlaying);
   };
 
-  // Обновление прогресса воспроизведения
+  // Обновление времени трека
   const handleTimeUpdate = () => {
-    if (!audioRef.current) return;
-    setCurrentTime(audioRef.current.currentTime);
+    if (audioRef.current) {
+      setCurrentTime(audioRef.current.currentTime);
+    }
   };
 
-  // Устанавливаем продолжительность трека
+  // Установка продолжительности трека
   const handleLoadedMetadata = () => {
-    if (!audioRef.current) return;
-    setDuration(audioRef.current.duration);
+    if (audioRef.current) {
+      setDuration(audioRef.current.duration);
+    }
   };
 
-  // Устанавливаем громкость
+  // Установка громкости
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!audioRef.current) return;
     const newVolume = parseFloat(e.target.value);
     setVolume(newVolume);
-    audioRef.current.volume = newVolume;
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume;
+    }
   };
 
-  // Обновляем трек, когда он изменяется
+  // Обновление трека при изменении текущего трека
   useEffect(() => {
-    if (!audioRef.current || !currentTrack) return;
-    audioRef.current.src = currentTrack.track_file; // Устанавливаем файл трека
-    setIsPlaying(true);
-    audioRef.current.play();
+    if (audioRef.current && currentTrack) {
+      audioRef.current.src = currentTrack.track_file;
+      setIsPlaying(false);
+      audioRef.current.load();
+    }
   }, [currentTrack]);
-
-  // Логика для лайков
-  const toggleLike = () => {
-    setIsLiked(!isLiked);
-    if (isDisliked && !isLiked) {
-      setIsDisliked(false); // Если лайк поставлен, дизлайк убирается
-    }
-  };
-
-  // Логика для дизлайков
-  const toggleDislike = () => {
-    setIsDisliked(!isDisliked);
-    if (isLiked && !isDisliked) {
-      setIsLiked(false); // Если дизлайк поставлен, лайк убирается
-    }
-  };
-
-  if (!currentTrack) {
-    return <div>Трек не выбран</div>;
-  }
 
   return (
     <div className="bar">
       <div className="bar__content">
+        {/* Прогресс трека */}
         <div className="bar__player-progress">
           <input
             type="range"
             min="0"
             max={duration}
             value={currentTime}
-            onChange={(e) =>
-              audioRef.current
-                ? (audioRef.current.currentTime = parseFloat(e.target.value))
-                : null
-            }
+            onChange={(e) => {
+              if (audioRef.current) {
+                audioRef.current.currentTime = parseFloat(e.target.value);
+              }
+            }}
           />
         </div>
+
+        {/* Элементы управления плеером */}
         <div className="bar__player-block">
           <div className="bar__player player">
             <div className="player__controls">
@@ -144,6 +118,7 @@ const Player: React.FC<PlayerProps> = ({ currentTrack }) => {
               </div>
             </div>
 
+            {/* Информация о треке */}
             <div className="player__track-play track-play">
               <div className="track-play__contain">
                 <div className="track-play__image">
@@ -153,40 +128,19 @@ const Player: React.FC<PlayerProps> = ({ currentTrack }) => {
                 </div>
                 <div className="track-play__author">
                   <a className="track-play__author-link" href="#">
-                    {currentTrack.name}
+                    {currentTrack?.name || ' '}
                   </a>
                 </div>
                 <div className="track-play__album">
                   <a className="track-play__album-link" href="#">
-                    {currentTrack.album}
+                    {currentTrack?.album || ' '}
                   </a>
-                </div>
-              </div>
-
-              <div className="track-play__like-dis">
-                <div
-                  className={`track-play__like _btn-icon ${
-                    isLiked ? 'active' : ''
-                  }`}
-                  onClick={toggleLike}
-                >
-                  <svg className="track-play__like-svg">
-                    <use xlinkHref="img/icon/sprite.svg#icon-like" />
-                  </svg>
-                </div>
-                <div
-                  className={`track-play__dislike _btn-icon ${
-                    isDisliked ? 'active' : ''
-                  }`}
-                  onClick={toggleDislike}
-                >
-                  <svg className="track-play__dislike-svg">
-                    <use xlinkHref="img/icon/sprite.svg#icon-dislike" />
-                  </svg>
                 </div>
               </div>
             </div>
           </div>
+
+          {/* Громкость */}
           <div className="bar__volume-block volume">
             <div className="volume__content">
               <div className="volume__image">
@@ -209,11 +163,13 @@ const Player: React.FC<PlayerProps> = ({ currentTrack }) => {
           </div>
         </div>
       </div>
+
+      {/* Аудио элемент */}
       <audio
         ref={audioRef}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
-        src={currentTrack.track_file} // Устанавливаем источник аудио
+        src={currentTrack?.track_file || ''}
       />
     </div>
   );

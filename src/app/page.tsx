@@ -2,7 +2,7 @@ import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import SearchBar from './components/SearchBar';
 import Playlist from './components/Playlist';
-import Player from './components/Player';
+import PlaylistPage from './components/PlaylistPage';
 import Filters from './components/Filters';
 
 export default function HomePage() {
@@ -14,7 +14,7 @@ export default function HomePage() {
           <div className="main__centerblock centerblock">
             <SearchBar />
             <Playlist />
-            <Player/>
+            <PlaylistPage/>
           </div>
           <Sidebar />
         </main>
