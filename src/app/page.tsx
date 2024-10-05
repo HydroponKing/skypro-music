@@ -14,6 +14,7 @@ export default function HomePage() {
           <div className="main__centerblock centerblock">
             <SearchBar />
             <Playlist />
+            <Player/>
           </div>
           <Sidebar />
         </main>
