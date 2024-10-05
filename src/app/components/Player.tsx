@@ -26,7 +26,11 @@ const Player: React.FC<PlayerProps> = ({ currentTrack }) => {
   // Воспроизведение/пауза трека
   const togglePlay = () => {
     if (audioRef.current) {
-      isPlaying ? audioRef.current.pause() : audioRef.current.play();
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
       setIsPlaying(!isPlaying);
     }
   };
@@ -45,6 +49,15 @@ const Player: React.FC<PlayerProps> = ({ currentTrack }) => {
     }
   };
 
+  // Обработчик для изменения положения ползунка прогресса (перемотка трека)
+  const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTime = parseFloat(e.target.value);
+    if (audioRef.current) {
+      audioRef.current.currentTime = newTime;
+    }
+    setCurrentTime(newTime);
+  };
+
   // Установка громкости
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newVolume = parseFloat(e.target.value);
@@ -60,8 +73,8 @@ const Player: React.FC<PlayerProps> = ({ currentTrack }) => {
       audioRef.current.src = currentTrack.track_file;
       setIsPlaying(false);
       audioRef.current.load();
-      audioRef.current.play(); // Автоматически запускаем воспроизведение
-      setIsPlaying(true); // Устанавливаем состояние "воспроизведение"
+      audioRef.current.play();
+      setIsPlaying(true);
     }
   }, [currentTrack]);
 
@@ -73,13 +86,10 @@ const Player: React.FC<PlayerProps> = ({ currentTrack }) => {
           <input
             type="range"
             min="0"
-            max={duration}
+            max={duration} // исправляем max на числовое значение
             value={currentTime}
-            onChange={(e) => {
-              if (audioRef.current) {
-                audioRef.current.currentTime = parseFloat(e.target.value);
-              }
-            }}
+            step="0.01" // шаг для более плавной перемотки
+            onChange={handleProgressChange}
           />
         </div>
 

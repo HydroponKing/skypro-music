@@ -667,10 +667,30 @@ body {
   flex-direction: column;
 }
 
-.bar__player-progress {
-  width: 100%;
-  height: 5px;
-  background: #2e2e2e;
+.bar__player-progress input[type="range"] {
+  width: 100%; /* Это позволит самому input растянуться на всю ширину */;
+}
+.bar__player-progress input[type="range"]::-webkit-slider-runnable-track {
+  background-color: #666; /* Цвет заполненной полосы */
+  height: 5px; /* Задаем высоту для полосы */
+}
+.bar__player-progress input[type="range"]::-webkit-slider-thumb {
+  appearance: none; /* Убираем стандартный вид "ползунка" */
+  width: 10px; /* Ширина ползунка */
+  height: 10px; /* Высота ползунка */
+  background-color: #000; /* Цвет ползунка */
+  border-radius: 50%; /* Закругляем ползунок */
+  cursor: pointer;
+  position: relative;
+}
+
+/* Стилизация ползунка */
+.bar__player-progress input[type="range"]::-webkit-slider-thumb {
+  width: 10px; /* Ширина ползунка */
+  height: 10px; /* Высота ползунка */
+  background: #000; /* Цвет ползунка */
+  border-radius: 50%; /* Закругляем ползунок */
+  margin-top: -5px; /* Смещение ползунка для точного центрирования */
 }
 
 .bar__player-block {
