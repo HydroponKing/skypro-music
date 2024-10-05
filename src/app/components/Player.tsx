@@ -60,6 +60,8 @@ const Player: React.FC<PlayerProps> = ({ currentTrack }) => {
       audioRef.current.src = currentTrack.track_file;
       setIsPlaying(false);
       audioRef.current.load();
+      audioRef.current.play(); // Автоматически запускаем воспроизведение
+      setIsPlaying(true); // Устанавливаем состояние "воспроизведение"
     }
   }, [currentTrack]);
 
