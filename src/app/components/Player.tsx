@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 
 // Интерфейс для трека
 interface Track {
@@ -103,15 +103,11 @@ const Player: React.FC<PlayerProps> = ({ currentTrack }) => {
                 </svg>
               </div>
               <div className="player__btn-play _btn" onClick={togglePlay}>
-                <svg className="player__btn-play-svg">
-                  <use
-                    xlinkHref={
-                      isPlaying
-                        ? 'img/icon/sprite.svg#icon-pause'
-                        : 'img/icon/sprite.svg#icon-play'
-                    }
-                  />
-                </svg>
+                <img
+                  src={isPlaying ? "/img/icon/pause.svg" : "/img/icon/play.svg"}
+                  alt={isPlaying ? "Pause" : "Play"}
+                  className="player__btn-icon"
+                />
               </div>
               <div className="player__btn-next">
                 <svg className="player__btn-next-svg">
@@ -140,12 +136,12 @@ const Player: React.FC<PlayerProps> = ({ currentTrack }) => {
                 </div>
                 <div className="track-play__author">
                   <a className="track-play__author-link" href="#">
-                    {currentTrack?.name || ' '}
+                    {currentTrack?.name || " "}
                   </a>
                 </div>
                 <div className="track-play__album">
                   <a className="track-play__album-link" href="#">
-                    {currentTrack?.album || ' '}
+                    {currentTrack?.album || " "}
                   </a>
                 </div>
               </div>
@@ -181,7 +177,7 @@ const Player: React.FC<PlayerProps> = ({ currentTrack }) => {
         ref={audioRef}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
-        src={currentTrack?.track_file || ''}
+        src={currentTrack?.track_file || ""}
       />
     </div>
   );

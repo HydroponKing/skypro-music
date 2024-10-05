@@ -734,6 +734,23 @@ body {
   padding: 0 92px 0 0;
 }
 
+/* Контейнер для иконки */
+.player__btn-play {
+  width: 30px; /* Фиксированная ширина для контейнера */
+  height: 30px; /* Фиксированная высота для контейнера */
+  display: flex;
+  justify-content: center; /* Выравнивание по центру */
+  align-items: center; /* Выравнивание по вертикали */
+}
+
+/* Иконки Play и Pause */
+.player__btn-icon {
+  width: 100%; /* Иконки будут занимать всю ширину контейнера */
+  height: 100%; /* Иконки будут занимать всю высоту контейнера */
+  object-fit: contain; /* Масштабируем иконки, чтобы они не растягивались */
+}
+
+
 .player__controls {
   display: -webkit-box;
   display: -ms-flexbox;
