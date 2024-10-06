@@ -1011,3 +1011,87 @@ body {
   background-color: var(--progress-color);
   transition: width 0.1s ease-in-out;
 }
+
+.volume__progress-line {
+  --progress-height: 5px;
+  --progress-color: white; /* Цвет прогресса (белый) */
+  --progress-bg-color: #2e2e2e; /* Серый цвет заднего фона */
+  --thumb-color: black; /* Цвет бегунка (кружка) */
+  --thumb-border-color: white; /* Обводка бегунка */
+
+  width: 109px;
+  height: var(--progress-height);
+  background: linear-gradient(
+    to right,
+    var(--progress-color) 0%,
+    var(--progress-color) calc(var(--value) * 100%),
+    var(--progress-bg-color) calc(var(--value) * 100%),
+    var(--progress-bg-color) 100%
+  );
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  position: relative;
+  margin-bottom: 13px;
+  height: 3px;
+}
+
+/* Стили для трека (линии) в WebKit браузерах (Chrome, Safari) */
+.volume__progress-line::-webkit-slider-runnable-track {
+  width: 100%;
+  height: var(--progress-height);
+  background: transparent; /* Очищаем фон, чтобы использовать background элемента */
+}
+
+/* Стили для бегунка в WebKit браузерах */
+.volume__progress-line::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background-color: var(--thumb-color); /* Цвет бегунка */
+  border: 2px solid var(--thumb-border-color); /* Белая обводка */
+  border-radius: 50%; /* Круглая форма */
+  margin-top: -5px; /* Центрирование */
+}
+
+/* Стили для трека в Firefox */
+.volume__progress-line::-moz-range-track {
+  width: 100%;
+  height: var(--progress-height);
+  background: transparent; /* Очищаем фон, чтобы использовать background элемента */
+}
+
+/* Стили для бегунка в Firefox */
+.volume__progress-line::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  background-color: var(--thumb-color);
+  border: 2px solid var(--thumb-border-color);
+  border-radius: 50%;
+}
+
+/* Стили для трека в IE и Edge */
+.volume__progress-line::-ms-track {
+  width: 100%;
+  height: var(--progress-height);
+  background-color: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+.volume__progress-line::-ms-fill-lower {
+  background-color: var(--progress-color); /* Белый прогресс */
+}
+
+.volume__progress-line::-ms-fill-upper {
+  background-color: var(--progress-bg-color); /* Серый задний фон */
+}
+
+.volume__progress-line::-ms-thumb {
+  width: 15px;
+  height: 15px;
+  background-color: var(--thumb-color);
+  border: 2px solid var(--thumb-border-color);
+  border-radius: 50%;
+}

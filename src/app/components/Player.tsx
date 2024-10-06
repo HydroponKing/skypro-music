@@ -18,7 +18,12 @@ interface PlayerProps {
   onTrackChange: (newIndex: number) => void;
 }
 
-const Player: React.FC<PlayerProps> = ({ currentTrack, playlist, currentTrackIndex, onTrackChange }) => {
+const Player: React.FC<PlayerProps> = ({
+  currentTrack,
+  playlist,
+  currentTrackIndex,
+  onTrackChange,
+}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -109,7 +114,10 @@ const Player: React.FC<PlayerProps> = ({ currentTrack, playlist, currentTrackInd
     <div className="bar">
       <div className="bar__content">
         {/* Прогресс трека */}
-        <div className="styled-progress-container" onClick={handleProgressClick}>
+        <div
+          className="styled-progress-container"
+          onClick={handleProgressClick}
+        >
           <div
             className="styled-progress-bar"
             style={{ width: `${(currentTime / duration) * 100}%` }}
@@ -138,7 +146,9 @@ const Player: React.FC<PlayerProps> = ({ currentTrack, playlist, currentTrackInd
                 </svg>
               </div>
               <div
-                className={`player__btn-repeat _btn-icon ${isRepeating ? "active" : ""}`}
+                className={`player__btn-repeat _btn-icon ${
+                  isRepeating ? "active" : ""
+                }`}
                 onClick={toggleRepeat}
               >
                 <svg className="player__btn-repeat-svg">
@@ -191,6 +201,9 @@ const Player: React.FC<PlayerProps> = ({ currentTrack, playlist, currentTrackInd
                   step="0.01"
                   value={volume}
                   onChange={handleVolumeChange}
+                  style={
+                    { "--value": volume } as React.CSSProperties
+                  } /* Передаём значение для прогресса */
                 />
               </div>
             </div>
