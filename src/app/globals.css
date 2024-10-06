@@ -1,12 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap");
 @font-face {
-  font-family: 'StratosSkyeng';
-  src: url('/fonts/StratosSkyeng.woff') format('woff');
+  font-family: "StratosSkyeng";
+  src: url("/fonts/StratosSkyeng.woff") format("woff");
   font-weight: 400;
   font-style: normal;
 }
-
-
 
 * {
   margin: 0;
@@ -291,7 +289,6 @@ body {
   background-color: #282828; /* Можно добавить фон для активной кнопки */
 }
 
-
 .filter__button:not(:last-child) {
   margin-right: 10px;
 }
@@ -327,16 +324,15 @@ body {
   background: rgb(75, 73, 73);
 }
 
-
 /* Стили для элементов списка */
 .filter__list li {
   list-style: none; /* Убираем маркеры списка */
-  font-family: 'StratosSkyeng', sans-serif; /* Устанавливаем шрифт */
+  font-family: "StratosSkyeng", sans-serif; /* Устанавливаем шрифт */
   font-size: 20px; /* Размер шрифта */
   font-weight: 400; /* Толщина шрифта */
   line-height: 24px; /* Высота строки */
   letter-spacing: 0; /* Без увеличения межбуквенного расстояния */
-  color: #FFFFFF; /* Белый текст */
+  color: #ffffff; /* Белый текст */
   text-align: left; /* Выравнивание по левому краю */
   cursor: pointer;
   padding: 14px 8px; /* Отступ между элементами */
@@ -344,11 +340,9 @@ body {
 }
 
 .filter__list li:hover {
-  color: #AC00FF; /* Цвет текста при наведении */
+  color: #ac00ff; /* Цвет текста при наведении */
   text-decoration: underline; /* Подчеркивание при наведении */
 }
-
-
 
 .content__title {
   display: -webkit-box;
@@ -406,8 +400,8 @@ body {
   display: none;
 }
 .playlist {
-  -ms-overflow-style: none;  /* IE и Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE и Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .playlist-title__col {
@@ -668,7 +662,7 @@ body {
 }
 
 .bar__player-progress input[type="range"] {
-  width: 100%; /* Это позволит самому input растянуться на всю ширину */;
+  width: 100%; /* Это позволит самому input растянуться на всю ширину */
 }
 .bar__player-progress input[type="range"]::-webkit-slider-runnable-track {
   background-color: #666; /* Цвет заполненной полосы */
@@ -750,7 +744,6 @@ body {
   object-fit: contain; /* Масштабируем иконки, чтобы они не растягивались */
 }
 
-
 .player__controls {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -813,8 +806,8 @@ body {
 
 /* Цвет заливки иконки, когда кнопка активна */
 .player__btn-repeat.active .player__btn-repeat-svg {
-  fill: #ad61ff; 
-  stroke: #ad61ff; 
+  fill: #ad61ff;
+  stroke: #ad61ff;
 }
 
 .player__btn-repeat-svg {
@@ -989,6 +982,32 @@ body {
   width: 109px;
 }
 
+/* Стилизация для ползунка громкости */
 .volume__progress-line {
   width: 109px;
+
+}
+/* Стили для прогресс-бара */
+.styled-progress-container {
+  --progress-height: 5px;
+  --progress-color: #b672ff;
+  --progress-bg-color: #2e2e2e;
+
+  width: 100%;
+  height: var(--progress-height);
+  background-color: var(--progress-bg-color);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: height 0.2s;
+}
+
+.styled-progress-container:hover {
+  --progress-height: 8px;
+}
+
+.styled-progress-bar {
+  height: var(--progress-height);
+  background-color: var(--progress-color);
+  transition: width 0.1s ease-in-out;
 }

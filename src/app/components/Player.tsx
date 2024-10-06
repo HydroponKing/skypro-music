@@ -23,7 +23,7 @@ const Player: React.FC<PlayerProps> = ({ currentTrack, playlist, currentTrackInd
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.5);
-  const [isRepeating, setIsRepeating] = useState (false);//Состояние повтора
+  const [isRepeating, setIsRepeating] = useState(false); // Состояние повтора
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -53,13 +53,16 @@ const Player: React.FC<PlayerProps> = ({ currentTrack, playlist, currentTrackInd
     }
   };
 
-  // Обработчик для изменения положения ползунка прогресса (перемотка трека)
-  const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newTime = parseFloat(e.target.value);
+  // Изменение прогресса (перемотка трека)
+  const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (audioRef.current) {
+      const progressBar = e.currentTarget;
+      const rect = progressBar.getBoundingClientRect();
+      const offsetX = e.clientX - rect.left;
+      const newTime = (offsetX / rect.width) * duration;
       audioRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
     }
-    setCurrentTime(newTime);
   };
 
   // Установка громкости
@@ -82,39 +85,34 @@ const Player: React.FC<PlayerProps> = ({ currentTrack, playlist, currentTrackInd
     }
   }, [currentTrack]);
 
-  //Обработчик завершения трека 
+  // Обработчик завершения трека
   const hadleTrackEnded = () => {
     if (audioRef.current) {
-      if (isRepeating){
-        audioRef.current.currentTime - 0;
+      if (isRepeating) {
+        audioRef.current.currentTime = 0;
         audioRef.current.play();
       } else {
-        if (currentTrackIndex < playlist.length - 1){
+        if (currentTrackIndex < playlist.length - 1) {
           onTrackChange(currentTrackIndex + 1);
-        }else{
+        } else {
           onTrackChange(0);
         }
       }
     }
   };
 
-
   const toggleRepeat = () => {
-    setIsRepeating((prev) => !prev)
-  }
+    setIsRepeating((prev) => !prev);
+  };
 
   return (
     <div className="bar">
       <div className="bar__content">
         {/* Прогресс трека */}
-        <div className="bar__player-progress">
-          <input
-            type="range"
-            min="0"
-            max={duration} // исправляем max на числовое значение
-            value={currentTime}
-            step="0.01" // шаг для более плавной перемотки
-            onChange={handleProgressChange}
+        <div className="styled-progress-container" onClick={handleProgressClick}>
+          <div
+            className="styled-progress-bar"
+            style={{ width: `${(currentTime / duration) * 100}%` }}
           />
         </div>
 
@@ -139,8 +137,9 @@ const Player: React.FC<PlayerProps> = ({ currentTrack, playlist, currentTrackInd
                   <use xlinkHref="img/icon/sprite.svg#icon-next" />
                 </svg>
               </div>
-              <div className={`player__btn-repeat _btn-icon ${isRepeating ? 'active' : ''}`}
-              onClick={toggleRepeat}
+              <div
+                className={`player__btn-repeat _btn-icon ${isRepeating ? "active" : ""}`}
+                onClick={toggleRepeat}
               >
                 <svg className="player__btn-repeat-svg">
                   <use xlinkHref="img/icon/sprite.svg#icon-repeat" />
