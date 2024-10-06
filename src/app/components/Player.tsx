@@ -13,9 +13,12 @@ interface Track {
 
 interface PlayerProps {
   currentTrack: Track | null;
+  playlist: Track[];
+  currentTrackIndex: number;
+  onTrackChange: (newIndex: number) => void;
 }
 
-const Player: React.FC<PlayerProps> = ({ currentTrack }) => {
+const Player: React.FC<PlayerProps> = ({ currentTrack, playlist, currentTrackIndex, onTrackChange }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -79,17 +82,21 @@ const Player: React.FC<PlayerProps> = ({ currentTrack }) => {
     }
   }, [currentTrack]);
 
-  //Обработчик завершения трека (для кнопки репит)  
+  //Обработчик завершения трека 
   const hadleTrackEnded = () => {
     if (audioRef.current) {
       if (isRepeating){
         audioRef.current.currentTime - 0;
         audioRef.current.play();
       } else {
-        setIsPlaying(false);
+        if (currentTrackIndex < playlist.length - 1){
+          onTrackChange(currentTrackIndex + 1);
+        }else{
+          onTrackChange(0);
+        }
       }
     }
-  }
+  };
 
 
   const toggleRepeat = () => {

@@ -811,9 +811,10 @@ body {
   margin-right: 24px;
 }
 
+/* Цвет заливки иконки, когда кнопка активна */
 .player__btn-repeat.active .player__btn-repeat-svg {
-  fill: #ad61ff; /* Цвет заливки иконки, когда кнопка активна */
-  stroke: #ad61ff; /* Цвет обводки иконки, когда кнопка активна */
+  fill: #ad61ff; 
+  stroke: #ad61ff; 
 }
 
 .player__btn-repeat-svg {

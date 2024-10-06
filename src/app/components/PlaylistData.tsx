@@ -24,7 +24,9 @@ interface Track {
 
 export const PlaylistData: React.FC = () => {
   const [tracks, setTracks] = useState<Track[]>([]);
-  const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState<number | null>(
+    null
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const [authors, setAuthors] = useState<string[]>([]);
@@ -37,16 +39,24 @@ export const PlaylistData: React.FC = () => {
         const trackData = await fetchTracks();
         setTracks(trackData);
 
-        const uniqueAuthors = [...new Set(trackData.map((track: Track) => track.author))];
-        const uniqueReleaseDates = [...new Set(trackData.map((track: Track) => track.release_date))];
-        const uniqueGenres = [...new Set(trackData.flatMap((track: Track) => track.genre))];
+        const uniqueAuthors = [
+          ...new Set(trackData.map((track: Track) => track.author)),
+        ];
+        const uniqueReleaseDates = [
+          ...new Set(trackData.map((track: Track) => track.release_date)),
+        ];
+        const uniqueGenres = [
+          ...new Set(trackData.flatMap((track: Track) => track.genre)),
+        ];
 
         setAuthors(uniqueAuthors);
         setReleaseDates(uniqueReleaseDates);
         setGenres(uniqueGenres);
         setLoading(false);
       } catch (err: unknown) {
-        setError(err instanceof Error ? err : new Error("Произошла неизвестная ошибка"));
+        setError(
+          err instanceof Error ? err : new Error("Произошла неизвестная ошибка")
+        );
         setLoading(false);
       }
     };
@@ -54,8 +64,14 @@ export const PlaylistData: React.FC = () => {
     getTracks();
   }, []);
 
-  const handleTrackClick = (track: Track) => {
-    setCurrentTrack(track); // Устанавливаем выбранный трек
+  const handleTrackClick = (index: number) => {
+    setCurrentTrackIndex(index); // Устанавливаем индекс выбранного трека
+  };
+
+  const handleTrackChange = (newIndex: number) => {
+    if (newIndex >= 0 && newIndex < tracks.length) {
+      setCurrentTrackIndex(newIndex);
+    }
   };
 
   if (error) {
@@ -79,8 +95,12 @@ export const PlaylistData: React.FC = () => {
         {loading ? (
           <div>Loading...</div>
         ) : (
-          tracks.map((track) => (
-            <div key={track._id} className="playlist__item" onClick={() => handleTrackClick(track)}>
+          tracks.map((track, index) => (
+            <div
+              key={track._id}
+              className="playlist__item"
+              onClick={() => handleTrackClick(index)}
+            >
               <div className="playlist__track track">
                 <div className="track__title">
                   <div className="track__title-image">
@@ -89,9 +109,7 @@ export const PlaylistData: React.FC = () => {
                     </svg>
                   </div>
                   <div className="track__title-text">
-                    <span className="track__title-link">
-                      {track.name}
-                    </span>
+                    <span className="track__title-link">{track.name}</span>
                   </div>
                 </div>
                 <div className="track__author">
@@ -115,7 +133,14 @@ export const PlaylistData: React.FC = () => {
       </div>
 
       {/* Player рендерится один раз и обновляет трек при выборе */}
-      <Player currentTrack={currentTrack} />
+      {currentTrackIndex !== null && (
+        <Player
+          currentTrack={tracks[currentTrackIndex]} // текущий трек
+          playlist={tracks} // весь плейлист
+          currentTrackIndex={currentTrackIndex} // индекс текущего трека
+          onTrackChange={handleTrackChange} // функция смены трека
+        />
+      )}
     </div>
   );
 };
