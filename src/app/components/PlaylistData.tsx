@@ -24,7 +24,7 @@ interface Track {
 
 export const PlaylistData: React.FC = () => {
   const [tracks, setTracks] = useState<Track[]>([]);
-  const [currentTrack, setCurrentTrack] = useState<Track | null>(null); // Состояние для текущего трека
+  const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const [authors, setAuthors] = useState<string[]>([]);

@@ -20,6 +20,7 @@ const Player: React.FC<PlayerProps> = ({ currentTrack }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.5);
+  const [isRepeating, setIsRepeating] = useState (false);//Состояние повтора
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -78,6 +79,23 @@ const Player: React.FC<PlayerProps> = ({ currentTrack }) => {
     }
   }, [currentTrack]);
 
+  //Обработчик завершения трека (для кнопки репит)  
+  const hadleTrackEnded = () => {
+    if (audioRef.current) {
+      if (isRepeating){
+        audioRef.current.currentTime - 0;
+        audioRef.current.play();
+      } else {
+        setIsPlaying(false);
+      }
+    }
+  }
+
+
+  const toggleRepeat = () => {
+    setIsRepeating((prev) => !prev)
+  }
+
   return (
     <div className="bar">
       <div className="bar__content">
@@ -114,7 +132,9 @@ const Player: React.FC<PlayerProps> = ({ currentTrack }) => {
                   <use xlinkHref="img/icon/sprite.svg#icon-next" />
                 </svg>
               </div>
-              <div className="player__btn-repeat _btn-icon">
+              <div className={`player__btn-repeat _btn-icon ${isRepeating ? 'active' : ''}`}
+              onClick={toggleRepeat}
+              >
                 <svg className="player__btn-repeat-svg">
                   <use xlinkHref="img/icon/sprite.svg#icon-repeat" />
                 </svg>
@@ -177,6 +197,7 @@ const Player: React.FC<PlayerProps> = ({ currentTrack }) => {
         ref={audioRef}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
+        onEnded={hadleTrackEnded}
         src={currentTrack?.track_file || ""}
       />
     </div>
