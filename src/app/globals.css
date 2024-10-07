@@ -1095,3 +1095,26 @@ body {
   border: 2px solid var(--thumb-border-color);
   border-radius: 50%;
 }
+.progress-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.current-time,
+.total-time {
+  color: #fff; /* Цвет текста */
+  font-size: 14px; /* Размер текста */
+  padding: 0 15px;
+}
+
+.styled-progress-container {
+  flex-grow: 1;
+  height: 5px;
+  background-color: #ccc;
+  margin: 0 10px; /* Отступы между временем и прогресс-баром */
+  position: relative;
+}
+
+

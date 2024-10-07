@@ -106,24 +106,35 @@ const Player: React.FC<PlayerProps> = ({
     }
   };
 
+  //повтор
   const toggleRepeat = () => {
     setIsRepeating((prev) => !prev);
+  };
+
+  //Функция форматирования времени
+  const formatTime = (time: number): string => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
   };
 
   return (
     <div className="bar">
       <div className="bar__content">
         {/* Прогресс трека */}
-        <div
-          className="styled-progress-container"
-          onClick={handleProgressClick}
-        >
+        <div className="progress-container">
+          <span className="current-time">{formatTime(currentTime)}</span>
           <div
-            className="styled-progress-bar"
-            style={{ width: `${(currentTime / duration) * 100}%` }}
-          />
+            className="styled-progress-container"
+            onClick={handleProgressClick}
+          >
+            <div
+              className="styled-progress-bar"
+              style={{ width: `${(currentTime / duration) * 100}%` }}
+            />
+          </div>
+          <span className="total-time">{formatTime(duration)}</span>
         </div>
-
         {/* Элементы управления плеером */}
         <div className="bar__player-block">
           <div className="bar__player player">
