@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Player from "./Player"; // Импортируем компонент Player
+import Player from "../Player/Player"; // Импортируем компонент Player
 
 // Интерфейс для трека
 interface Track {

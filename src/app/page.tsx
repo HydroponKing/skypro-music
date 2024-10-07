@@ -1,9 +1,9 @@
-import Navbar from './components/Navbar';
-import Sidebar from './components/Sidebar';
-import SearchBar from './components/SearchBar';
-import Playlist from './components/Playlist';
-import PlaylistPage from './components/PlaylistPage';
-import Filters from './components/Filters';
+import Navbar from './components/Navbar/Navbar';
+import Sidebar from './components/SideBar/Sidebar';
+import SearchBar from './components/SearchBar/SearchBar';
+import Playlist from './components/Playlist/Playlist';
+import PlaylistPage from './components/PlaylistPage/PlaylistPage';
+import Filters from './components/Filters/Filters';
 
 export default function HomePage() {
   return (

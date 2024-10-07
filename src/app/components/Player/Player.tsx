@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import styles from "./Player.module.css";
+
 
 // Интерфейс для трека
 interface Track {

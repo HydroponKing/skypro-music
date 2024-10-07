@@ -1,5 +1,5 @@
 import React from "react";
-import { PlaylistData } from "./PlaylistData";
+import { PlaylistData } from "../PlaylistData/PlaylistData";
 
 export default function Playlist() {
   return (

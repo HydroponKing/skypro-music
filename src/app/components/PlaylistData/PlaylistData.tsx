@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import Player from "./Player"; // Импортируем Player для управления треками
-import Filters from "./Filters";
-import { fetchTracks } from "./api";
+import Player from "../Player/Player"; // Импортируем Player для управления треками
+import Filters from "../Filters/Filters";
+import { fetchTracks } from "../api";
 
 // Интерфейс для трека
 interface Track {
