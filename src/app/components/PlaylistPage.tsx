@@ -68,7 +68,7 @@ const PlaylistPage: React.FC = () => {
                 <span className="track__album-link">{track.album}</span>
               </div>
               <div className="track__time">
-                <span className="track__time-text">
+                <span className="track__time-text ">
                   {Math.floor(track.duration_in_seconds / 60)}:
                   {track.duration_in_seconds % 60 < 10
                     ? `0${track.duration_in_seconds % 60}`

@@ -1102,11 +1102,13 @@ body {
 
 }
 
-.current-time,
-.total-time {
+.total-time, .current-time {
   color: #fff; /* Цвет текста */
   font-size: 14px; /* Размер текста */
   padding: 0 15px;
+}
+.current-time{
+  color: #b672ff ;
 }
 
 .styled-progress-container {
