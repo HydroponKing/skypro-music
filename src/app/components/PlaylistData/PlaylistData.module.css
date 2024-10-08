@@ -90,6 +90,7 @@
     -ms-grid-row-span: 2;
     grid-column: 1;
     grid-area: image;
+    position: relative;
   }
   
   .track__title-svg {
@@ -146,3 +147,13 @@
     color: #696969;
   }
   
+  .current-track-dot {
+    width: 16px;
+    height: 16px;
+    background-color: rgb(182, 114, 255);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }

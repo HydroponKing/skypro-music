@@ -108,6 +108,9 @@ export const PlaylistData: React.FC = () => {
                     <svg className={styles['track__title-svg']}>
                       <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
                     </svg>
+                    {currentTrackIndex == index &&(
+                      <div className={styles['current-track-dot']}></div>
+                    )}
                   </div>
                   <div className={styles['track__title-text']}>
                     <span className={styles['track__title-link']}>{track.name}</span>
