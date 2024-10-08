@@ -123,6 +123,19 @@ const Player: React.FC<PlayerProps> = ({
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
   };
+  
+  const handlePrev = () => {
+    if (currentTrackIndex > 0) {
+      onTrackChange(currentTrackIndex - 1)
+    }
+  };
+
+  const handleNext = () => {
+    if (currentTrackIndex < playlist.length - 1) {
+      onTrackChange(currentTrackIndex +1)
+    } 
+  };
+
 
   return (
     <div className="bar">
@@ -145,7 +158,7 @@ const Player: React.FC<PlayerProps> = ({
         <div className="bar__player-block">
           <div className="bar__player player">
             <div className="player__controls">
-              <div className="player__btn-prev">
+              <div className="player__btn-prev" onClick={handlePrev}>
                 <svg className="player__btn-prev-svg">
                   <use xlinkHref="img/icon/sprite.svg#icon-prev" />
                 </svg>
@@ -157,7 +170,7 @@ const Player: React.FC<PlayerProps> = ({
                   className="player__btn-icon"
                 />
               </div>
-              <div className="player__btn-next">
+              <div className="player__btn-next" onClick={handleNext}>
                 <svg className="player__btn-next-svg">
                   <use xlinkHref="img/icon/sprite.svg#icon-next" />
                 </svg>
