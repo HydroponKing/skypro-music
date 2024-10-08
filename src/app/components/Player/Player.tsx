@@ -18,6 +18,7 @@ interface PlayerProps {
   playlist: Track[];
   currentTrackIndex: number;
   onTrackChange: (newIndex: number) => void;
+  updatePlayingStatus: (isPlaying: boolean) => void
 }
 
 const Player: React.FC<PlayerProps> = ({
@@ -25,6 +26,7 @@ const Player: React.FC<PlayerProps> = ({
   playlist,
   currentTrackIndex,
   onTrackChange,
+  updatePlayingStatus,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -43,6 +45,7 @@ const Player: React.FC<PlayerProps> = ({
         audioRef.current.play();
       }
       setIsPlaying(!isPlaying);
+      updatePlayingStatus(!isPlaying);
     }
   };
 
@@ -89,6 +92,7 @@ const Player: React.FC<PlayerProps> = ({
       audioRef.current.load();
       audioRef.current.play();
       setIsPlaying(true);
+      updatePlayingStatus(true);
     }
   }, [currentTrack]);
 

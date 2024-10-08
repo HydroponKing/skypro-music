@@ -146,14 +146,59 @@
     text-align: right;
     color: #696969;
   }
-  
-  .current-track-dot {
-    width: 16px;
-    height: 16px;
-    background-color: rgb(182, 114, 255);
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+
+/* Фиолетовая точка для текущего трека */
+.current-track-dot {
+  width: 16px;
+  height: 16px;
+  background-color: rgb(182, 114, 255);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10; /* Убедимся, что точка выше SVG */
+}
+
+/* Анимация пульсации */
+@keyframes pulsate {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
   }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Класс для пульсирующей анимации */
+.pulsate {
+  animation: pulsate 1.5s infinite;
+}
+
+/* // Коммит: убедитесь, что .track__title-image имеет position: relative */
+
+/* Функция позиционирования точки */
+.track__title-image {
+  position: relative;
+  /* Остальные существующие стили */
+  width: 51px;
+  height: 51px;
+  padding: 16px;
+  background: #313131;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 17px;
+  grid-row: 1;
+  -ms-grid-row-span: 2;
+  grid-column: 1;
+  grid-area: image;
+}
+
+/* Остальные стили остаются без изменений */

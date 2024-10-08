@@ -34,6 +34,8 @@ export const PlaylistData: React.FC = () => {
   const [releaseDates, setReleaseDates] = useState<string[]>([]);
   const [genres, setGenres] = useState<string[]>([]);
 
+  const [isPlaying, setIsPlayingStatus] = useState<boolean>(false)
+
   useEffect(() => {
     const getTracks = async () => {
       try {
@@ -109,7 +111,11 @@ export const PlaylistData: React.FC = () => {
                       <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
                     </svg>
                     {currentTrackIndex == index &&(
-                      <div className={styles['current-track-dot']}></div>
+                      <div
+                      className={`${styles['current-track-dot']} ${
+                        isPlaying ? styles['pulsate'] : ""
+                      }`}
+                    ></div>
                     )}
                   </div>
                   <div className={styles['track__title-text']}>
@@ -143,6 +149,7 @@ export const PlaylistData: React.FC = () => {
           playlist={tracks} // весь плейлист
           currentTrackIndex={currentTrackIndex} // индекс текущего трека
           onTrackChange={handleTrackChange} // функция смены трека
+          updatePlayingStatus={setIsPlayingStatus}
         />
       )}
     </div>
