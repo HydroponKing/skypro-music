@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import styles from "./Filters.module.css";
 
 interface FiltersProps {
   authors: string[];
@@ -28,45 +29,44 @@ const Filters: React.FC<FiltersProps> = ({ authors, releaseDates, genres }) => {
 
   return (
     <div ref={filtersRef}>
-      <h2 className="centerblock__h2">Треки</h2>
-      <div className="centerblock__filter filter">
-        <div className="filter__title">Искать по:</div>
+      <h2 className={styles.centerblock__h2}>Треки</h2>
+      <div className={`${styles.centerblock__filter} ${styles.filter}`}>
+        <div className={styles.filter__title}>Искать по:</div>
         
         {/* Контейнер для кнопки и списка "Исполнителю" */}
         <div style={{ position: 'relative', display: 'inline-block' }}>
           <div
-            className={`filter__button button-author _btn-text ${openFilter === 'author' ? 'active' : ''}`}
+            className={`${styles.filter__button} ${styles['button-author']} ${styles['_btn-text']} ${openFilter === 'author' ? styles.active : ''}`}
             onClick={() => setOpenFilter(openFilter === 'author' ? null : 'author')}
           >
             исполнителю
           </div>
           {openFilter === 'author' && (
-  <div className="filter__list-container">
-    <ul className="filter__list">
-      {authors.map((author) => (
-        <li key={author}>{author}</li>
-      ))}
-    </ul>
-  </div>
-)}
-
+            <div className={styles.filter__list_container}>
+              <ul className={styles.filter__list}>
+                {authors.map((author) => (
+                  <li key={author}>{author}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         {/* Контейнер для кнопки и списка "Году выпуска" */}
         <div style={{ position: 'relative', display: 'inline-block', marginLeft: '16px' }}>
           <div
-            className={`filter__button button-year _btn-text ${openFilter === 'releaseDate' ? 'active' : ''}`}
+            className={`${styles.filter__button} ${styles['button-year']} ${styles['_btn-text']} ${openFilter === 'releaseDate' ? styles.active : ''}`}
             onClick={() => setOpenFilter(openFilter === 'releaseDate' ? null : 'releaseDate')}
           >
             году выпуска
           </div>
           {openFilter === 'releaseDate' && (
-            <div className="filter__list-container">
-            <ul className="filter__list">
-              {releaseDates.map((date) => (
-                <li key={date}>{date}</li>
-              ))}
-            </ul>
+            <div className={styles.filter__list_container}>
+              <ul className={styles.filter__list}>
+                {releaseDates.map((date) => (
+                  <li key={date}>{date}</li>
+                ))}
+              </ul>
             </div>
           )}
         </div>
@@ -74,18 +74,18 @@ const Filters: React.FC<FiltersProps> = ({ authors, releaseDates, genres }) => {
         {/* Контейнер для кнопки и списка "Жанру" */}
         <div style={{ position: 'relative', display: 'inline-block', marginLeft: '16px' }}>
           <div
-            className={`filter__button button-genre _btn-text ${openFilter === 'genre' ? 'active' : ''}`}
+            className={`${styles.filter__button} ${styles['button-genre']} ${styles['_btn-text']} ${openFilter === 'genre' ? styles.active : ''}`}
             onClick={() => setOpenFilter(openFilter === 'genre' ? null : 'genre')}
           >
             жанру
           </div>
           {openFilter === 'genre' && (
-            <div className="filter__list-container">
-            <ul className="filter__list">
-              {genres.map((genre) => (
-                <li key={genre}>{genre}</li>
-              ))}
-            </ul>
+            <div className={styles.filter__list_container}>
+              <ul className={styles.filter__list}>
+                {genres.map((genre) => (
+                  <li key={genre}>{genre}</li>
+                ))}
+              </ul>
             </div>
           )}
         </div>

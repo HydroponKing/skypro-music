@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Player from "../Player/Player"; // Импортируем компонент Player
+import styles from "./PlaylistPage.module.css"; // Импортируем CSS модуль
 
 // Интерфейс для трека
 interface Track {
@@ -26,7 +27,7 @@ const tracks: Track[] = [
 ];
 
 const PlaylistPage: React.FC = () => {
-  const [currentTrackIndex, setCurrentTrackIndex] = useState<number| null>(null); // Состояние для текущего трека
+  const [currentTrackIndex, setCurrentTrackIndex] = useState<number | null>(null); // Состояние для текущего трека
 
   // Обработка клика на трек в плейлисте
   const handleTrackClick = (trackIndex: number) => {
@@ -43,32 +44,32 @@ const PlaylistPage: React.FC = () => {
   return (
     <div>
       {/* Список треков */}
-      <div className="content__playlist">
+      <div className={styles['content__playlist']}>
         {tracks.map((track, index) => (
           <div
             key={track._id}
-            className="playlist__item"
+            className={styles['playlist__item']}
             onClick={() => handleTrackClick(index)} // При клике на трек
           >
-            <div className="playlist__track track">
-              <div className="track__title">
-                <div className="track__title-image">
-                  <svg className="track__title-svg">
+            <div className={`${styles['playlist__track']} ${styles.track}`}>
+              <div className={styles['track__title']}>
+                <div className={styles['track__title-image']}>
+                  <svg className={styles['track__title-svg']}>
                     <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
                   </svg>
                 </div>
-                <div className="track__title-text">
-                  <span className="track__title-link">{track.name}</span>
+                <div className={styles['track__title-text']}>
+                  <span className={styles['track__title-link']}>{track.name}</span>
                 </div>
               </div>
-              <div className="track__author">
-                <span className="track__author-link">{track.author}</span>
+              <div className={styles['track__author']}>
+                <span className={styles['track__author-link']}>{track.author}</span>
               </div>
-              <div className="track__album">
-                <span className="track__album-link">{track.album}</span>
+              <div className={styles['track__album']}>
+                <span className={styles['track__album-link']}>{track.album}</span>
               </div>
-              <div className="track__time">
-                <span className="track__time-text ">
+              <div className={styles['track__time']}>
+                <span className={styles['track__time-text']}>
                   {Math.floor(track.duration_in_seconds / 60)}:
                   {track.duration_in_seconds % 60 < 10
                     ? `0${track.duration_in_seconds % 60}`

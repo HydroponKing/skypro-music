@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Player from "../Player/Player"; // Импортируем Player для управления треками
 import Filters from "../Filters/Filters";
 import { fetchTracks } from "../api";
+import styles from "./PlaylistData.module.css";
 
 // Интерфейс для трека
 interface Track {
@@ -81,45 +82,45 @@ export const PlaylistData: React.FC = () => {
   return (
     <div>
       <Filters authors={authors} releaseDates={releaseDates} genres={genres} />
-      <div className="content__title playlist-title">
-        <div className="playlist-title__col col01">Трек</div>
-        <div className="playlist-title__col col02">Исполнитель</div>
-        <div className="playlist-title__col col03">Альбом</div>
-        <div className="playlist-title__col col04">
-          <svg className="playlist-title__svg">
+      <div className={`${styles['content__title']} ${styles['playlist-title']}`}>
+        <div className={`${styles['playlist-title__col']} ${styles['col01']}`}>Трек</div>
+        <div className={`${styles['playlist-title__col']} ${styles['col02']}`}>Исполнитель</div>
+        <div className={`${styles['playlist-title__col']} ${styles['col03']}`}>Альбом</div>
+        <div className={`${styles['playlist-title__col']} ${styles['col04']}`}>
+          <svg className={styles['playlist-title__svg']}>
             <use xlinkHref="/img/icon/sprite.svg#icon-watch"></use>
           </svg>
         </div>
       </div>
-      <div className="content__playlist">
+      <div className={styles['content__playlist']}>
         {loading ? (
           <div>Loading...</div>
         ) : (
           tracks.map((track, index) => (
             <div
               key={track._id}
-              className="playlist__item"
+              className={styles['playlist__item']}
               onClick={() => handleTrackClick(index)}
             >
-              <div className="playlist__track track">
-                <div className="track__title">
-                  <div className="track__title-image">
-                    <svg className="track__title-svg">
+              <div className={`${styles['playlist__track']} ${styles.track}`}>
+                <div className={styles['track__title']}>
+                  <div className={styles['track__title-image']}>
+                    <svg className={styles['track__title-svg']}>
                       <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
                     </svg>
                   </div>
-                  <div className="track__title-text">
-                    <span className="track__title-link">{track.name}</span>
+                  <div className={styles['track__title-text']}>
+                    <span className={styles['track__title-link']}>{track.name}</span>
                   </div>
                 </div>
-                <div className="track__author">
-                  <span className="track__author-link">{track.author}</span>
+                <div className={styles['track__author']}>
+                  <span className={styles['track__author-link']}>{track.author}</span>
                 </div>
-                <div className="track__album">
-                  <span className="track__album-link">{track.album}</span>
+                <div className={styles['track__album']}>
+                  <span className={styles['track__album-link']}>{track.album}</span>
                 </div>
-                <div className="track__time">
-                  <span className="track__time-text">
+                <div className={styles['track__time']}>
+                  <span className={styles['track__time-text']}>
                     {Math.floor(track.duration_in_seconds / 60)}:
                     {track.duration_in_seconds % 60 < 10
                       ? `0${track.duration_in_seconds % 60}`

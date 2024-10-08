@@ -1,11 +1,7 @@
-/* Navbar.module.css */
-
 .main__nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    height: 100vh; /* Высота на 100% от высоты окна */
-    flex-wrap: nowrap; /* Убираем перенос строк */
+    width: 15%; /* Ширина Navbar занимает 15% от ширины экрана */
+    min-width: 200px; /* Минимальная ширина, чтобы не сжиматься слишком сильно */
+    padding: 16px 0 0 16px;
   }
   
   .nav__logo {
@@ -37,6 +33,7 @@
     visibility: visible;
   }
   
+
   .menu__list {
     padding: 18px 0 0 0;
   }
