@@ -18,7 +18,7 @@ interface PlayerProps {
   playlist: Track[];
   currentTrackIndex: number;
   onTrackChange: (newIndex: number) => void;
-  updatePlayingStatus: (isPlaying: boolean) => void
+  updatePlayingStatus: (isPlaying: boolean) => void;
 }
 
 const Player: React.FC<PlayerProps> = ({
@@ -34,6 +34,7 @@ const Player: React.FC<PlayerProps> = ({
   const [volume, setVolume] = useState(0.5);
   const [isRepeating, setIsRepeating] = useState(false); 
   const [isShuffling, setIsShuffling] = useState(false); // состояние перемешивания
+  
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
