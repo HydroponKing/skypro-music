@@ -88,9 +88,7 @@ const Player: React.FC<PlayerProps> = ({
   // Обновление трека при изменении текущего трека
   useEffect(() => {
     if (audioRef.current && currentTrack) {
-      audioRef.current.src = currentTrack.track_file;
       setIsPlaying(false);
-      audioRef.current.load();
       audioRef.current.play();
       setIsPlaying(true);
       updatePlayingStatus(true);
