@@ -32,7 +32,8 @@ const Player: React.FC<PlayerProps> = ({
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.5);
-  const [isRepeating, setIsRepeating] = useState(false); // Состояние повтора
+  const [isRepeating, setIsRepeating] = useState(false); 
+  const [isShuffling, setIsShuffling] = useState(false); // состояние перемешивания
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -96,26 +97,17 @@ const Player: React.FC<PlayerProps> = ({
     }
   }, [currentTrack]);
 
-  // Обработчик завершения трека
-  const hadleTrackEnded = () => {
-    if (audioRef.current) {
-      if (isRepeating) {
-        audioRef.current.currentTime = 0;
-        audioRef.current.play();
-      } else {
-        if (currentTrackIndex < playlist.length - 1) {
-          onTrackChange(currentTrackIndex + 1);
-        } else {
-          onTrackChange(0);
-        }
-      }
-    }
-  };
 
-  //повтор
+
+  //переключение повтора
   const toggleRepeat = () => {
     setIsRepeating((prev) => !prev);
   };
+
+  //переключение перемешивания
+  const toggleSuffle = () => {
+    setIsShuffling((prev) => !prev)
+  }
 
   //Функция форматирования времени
   const formatTime = (time: number): string => {
@@ -130,10 +122,49 @@ const Player: React.FC<PlayerProps> = ({
     }
   };
 
+    // Обработчик завершения трека с учётом shuffle
+  const handleTrackEnded = () => {
+    if (isRepeating) {
+      if (audioRef.current) {
+        audioRef.current.currentTime = 0;
+        audioRef.current.play();
+      }
+    } else if (isShuffling) { // Проверяем, активен ли shuffle
+      if (playlist.length > 0) {
+        let nextIndex = Math.floor(Math.random() * playlist.length);
+        // Убеждаемся, что следующий трек не тот же самый
+        while (nextIndex === currentTrackIndex && playlist.length > 1) {
+          nextIndex = Math.floor(Math.random() * playlist.length);
+        }
+        onTrackChange(nextIndex);
+      }
+    } else {
+      if (currentTrackIndex < playlist.length - 1) {
+        onTrackChange(currentTrackIndex + 1);
+      } else {
+        onTrackChange(0);
+      }
+    }
+  };
+
+  // функции handleNext для учёта shuffle
   const handleNext = () => {
-    if (currentTrackIndex < playlist.length - 1) {
-      onTrackChange(currentTrackIndex +1)
-    } 
+    if (isShuffling) { // Проверяем, активен ли shuffle
+      if (playlist.length > 0) {
+        let nextIndex = Math.floor(Math.random() * playlist.length);
+        // Убеждаемся, что следующий трек не тот же самый
+        while (nextIndex === currentTrackIndex && playlist.length > 1) {
+          nextIndex = Math.floor(Math.random() * playlist.length);
+        }
+        onTrackChange(nextIndex);
+      }
+    } else {
+      if (currentTrackIndex < playlist.length - 1) {
+        onTrackChange(currentTrackIndex + 1);
+      } /*else {
+        onTrackChange(0);
+      }*/
+    }
   };
 
 
@@ -185,7 +216,10 @@ const Player: React.FC<PlayerProps> = ({
                   <use xlinkHref="img/icon/sprite.svg#icon-repeat" />
                 </svg>
               </div>
-              <div className="player__btn-shuffle _btn-icon">
+              <div
+                className={`player__btn-shuffle _btn-icon ${isShuffling ? "active" : ""}`} // Используем обычные классы
+                onClick={toggleSuffle} // Вызываем функцию переключения shuffle
+              >
                 <svg className="player__btn-shuffle-svg">
                   <use xlinkHref="img/icon/sprite.svg#icon-shuffle" />
                 </svg>
@@ -246,7 +280,7 @@ const Player: React.FC<PlayerProps> = ({
         ref={audioRef}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
-        onEnded={hadleTrackEnded}
+        onEnded={handleTrackEnded}
         src={currentTrack?.track_file || ""}
       />
     </div>
