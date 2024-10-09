@@ -97,15 +97,27 @@ const Player: React.FC<PlayerProps> = ({
 
 
 
-  //переключение повтора
-  const toggleRepeat = () => {
-    setIsRepeating((prev) => !prev);
-  };
+// Функция для переключения режима повтора
+const toggleRepeat = () => {
+  setIsRepeating((prev) => {
+    const newState = !prev;
+    if (newState) {
+      setIsShuffling(false); // Отключаем shuffle при включении repeat
+    }
+    return newState;
+  });
+};
 
-  //переключение перемешивания
-  const toggleSuffle = () => {
-    setIsShuffling((prev) => !prev)
-  }
+// Функция для переключения режима перемешивания
+const toggleSuffle = () => {
+  setIsShuffling((prev) => {
+    const newState = !prev;
+    if (newState) {
+      setIsRepeating(false); // Отключаем repeat при включении shuffle
+    }
+    return newState;
+  });
+};
 
   //Функция форматирования времени
   const formatTime = (time: number): string => {
@@ -139,9 +151,9 @@ const Player: React.FC<PlayerProps> = ({
     } else {
       if (currentTrackIndex < playlist.length - 1) {
         onTrackChange(currentTrackIndex + 1);
-      } else {
+      }/* else {
         onTrackChange(0);
-      }
+      }*/
     }
   };
 
