@@ -1,15 +1,14 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import Player from "../Player/Player"; // Импортируем Player для управления треками
+import React, { useState, useEffect } from "react";
+import Player from "../Player/Player";
 import Filters from "../Filters/Filters";
 import { fetchTracks } from "../api";
 import styles from "./PlaylistData.module.css";
-import { useSelector, useDispatch } from 'react-redux';  // Импортируем хуки Redux
-import { RootState } from '../../../../store/store';  // Импорт типа состояния
-import { setCurrentTrack } from '../../../../store/currentTrackSlice';  // Импорт экшена
+import { useSelector, useDispatch } from 'react-redux';  // для работы с Redux
+import { RootState } from '../../../../store/store';
+import { setCurrentTrack, setPlaylist } from '../../../../store/playlistSlice';
 
-// Интерфейс для трека
 interface Track {
   _id: number;
   name: string;
@@ -18,32 +17,35 @@ interface Track {
   genre: string[];
   duration_in_seconds: number;
   album: string;
-  logo: {
+  logo: { 
     type: string;
-    data: any[];
+    data: any[]; 
   };
   track_file: string;
-  staredUser: number[];
+  staredUser: number[]; 
 }
 
 export const PlaylistData: React.FC = () => {
-  const [tracks, setTracks] = useState<Track[]>([]);
-
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); 
   const [error, setError] = useState<Error | null>(null);
   const [authors, setAuthors] = useState<string[]>([]);
   const [releaseDates, setReleaseDates] = useState<string[]>([]);
   const [genres, setGenres] = useState<string[]>([]);
-  const [isPlaying, setIsPlayingStatus] = useState<boolean>(false)
+  const [isPlaying, setIsPlayingStatus] = useState<boolean>(false);
 
-  const dispatch = useDispatch();  // Для отправки экшенов
-  const currentTrackIndex = useSelector((state: RootState) => state.currentTrack.trackIndex);  // Получаем индекс текущего трека из Redux
+  const dispatch = useDispatch();  // Хук для отправки экшенов в Redux
+  const tracks = useSelector((state: RootState) => state.playlist.tracks);  // Получаем плейлист из Redux store
+  const currentTrackIndex = useSelector((state: RootState) => state.playlist.currentTrackIndex);  // Индекс текущего трека
 
   useEffect(() => {
+    //  функция получен треков с API
     const getTracks = async () => {
       try {
+        // данные с API
         const trackData = await fetchTracks();
-        setTracks(trackData);
+
+        dispatch(setPlaylist(trackData));
+
 
         const uniqueAuthors = [
           ...new Set(trackData.map((track: Track) => track.author)),
@@ -58,6 +60,7 @@ export const PlaylistData: React.FC = () => {
         setAuthors(uniqueAuthors);
         setReleaseDates(uniqueReleaseDates);
         setGenres(uniqueGenres);
+
         setLoading(false);
       } catch (err: unknown) {
         setError(
@@ -68,15 +71,16 @@ export const PlaylistData: React.FC = () => {
     };
 
     getTracks();
-  }, []);
+  }, [dispatch]); 
 
   const handleTrackClick = (index: number) => {
-    dispatch(setCurrentTrack(index)); // Устанавливаем индекс выбранного трека
+    dispatch(setCurrentTrack(index)); // Устанавливаем индекс выбранного трека в Redux
   };
+
 
   const handleTrackChange = (newIndex: number) => {
     if (newIndex >= 0 && newIndex < tracks.length) {
-     dispatch(setCurrentTrack(newIndex));
+      dispatch(setCurrentTrack(newIndex));
     }
   };
 
@@ -87,6 +91,7 @@ export const PlaylistData: React.FC = () => {
   return (
     <div>
       <Filters authors={authors} releaseDates={releaseDates} genres={genres} />
+
       <div className={`${styles['content__title']} ${styles['playlist-title']}`}>
         <div className={`${styles['playlist-title__col']} ${styles['col01']}`}>Трек</div>
         <div className={`${styles['playlist-title__col']} ${styles['col02']}`}>Исполнитель</div>
@@ -97,9 +102,10 @@ export const PlaylistData: React.FC = () => {
           </svg>
         </div>
       </div>
+
       <div className={styles['content__playlist']}>
         {loading ? (
-          <div>Loading...</div>
+          <div>Loading...</div> 
         ) : (
           tracks.map((track, index) => (
             <div
@@ -113,12 +119,12 @@ export const PlaylistData: React.FC = () => {
                     <svg className={styles['track__title-svg']}>
                       <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
                     </svg>
-                    {currentTrackIndex == index &&(
+                    {currentTrackIndex == index && (
                       <div
-                      className={`${styles['current-track-dot']} ${
-                        isPlaying ? styles['pulsate'] : ""
-                      }`}
-                    ></div>
+                        className={`${styles['current-track-dot']} ${
+                          isPlaying ? styles['pulsate'] : ""
+                        }`}
+                      ></div>
                     )}
                   </div>
                   <div className={styles['track__title-text']}>
@@ -145,13 +151,12 @@ export const PlaylistData: React.FC = () => {
         )}
       </div>
 
-      {/* Player рендерится один раз и обновляет трек при выборе */}
       {currentTrackIndex !== null && (
         <Player
-          currentTrack={tracks[currentTrackIndex]} // текущий трек
-          playlist={tracks} // весь плейлист
-          currentTrackIndex={currentTrackIndex} // индекс текущего трека
-          onTrackChange={handleTrackChange} // функция смены трека
+          currentTrack={tracks[currentTrackIndex]}
+          playlist={tracks}
+          currentTrackIndex={currentTrackIndex}
+          onTrackChange={handleTrackChange}
           updatePlayingStatus={setIsPlayingStatus}
         />
       )}

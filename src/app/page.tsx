@@ -3,7 +3,6 @@ import Sidebar from './components/SideBar/Sidebar';
 import SearchBar from './components/SearchBar/SearchBar';
 import Playlist from './components/Playlist/Playlist';
 import PlaylistPage from './components/PlaylistPage/PlaylistPage';
-import Filters from './components/Filters/Filters';
 import ReduxProvider from './ReduxProvider';
 
 export default function HomePage() {
