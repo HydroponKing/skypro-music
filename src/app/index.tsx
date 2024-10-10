@@ -4,8 +4,9 @@ import ReduxProvider from './ReduxProvider'; // Импортируем ReduxProv
 import HomePage from './page'; // Импорт компонента HomePage (из page.tsx)
 
 ReactDOM.render(
-  <ReduxProvider>
-    <HomePage />
-  </ReduxProvider>,
-  document.getElementById('root')
-);
+    <ReduxProvider>
+      <HomePage />
+    </ReduxProvider>,
+    document.getElementById('root')
+  );
+  

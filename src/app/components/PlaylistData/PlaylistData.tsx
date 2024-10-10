@@ -6,8 +6,8 @@ import Filters from "../Filters/Filters";
 import { fetchTracks } from "../api";
 import styles from "./PlaylistData.module.css";
 import { useSelector, useDispatch } from 'react-redux';  // Импортируем хуки Redux
-import { RootState } from '../../store/store';  // Импорт типа состояния
-import { setCurrentTrack } from '../../store/currentTrackSlice';  // Импорт экшена
+import { RootState } from '../../../../store/store';  // Импорт типа состояния
+import { setCurrentTrack } from '../../../../store/currentTrackSlice';  // Импорт экшена
 
 // Интерфейс для трека
 interface Track {

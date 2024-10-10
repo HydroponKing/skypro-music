@@ -4,10 +4,12 @@ import SearchBar from './components/SearchBar/SearchBar';
 import Playlist from './components/Playlist/Playlist';
 import PlaylistPage from './components/PlaylistPage/PlaylistPage';
 import Filters from './components/Filters/Filters';
+import ReduxProvider from './ReduxProvider';
 
 export default function HomePage() {
   return (
     <div className="wrapper">
+      <ReduxProvider> 
       <div className="container">
         <main className="main">
           <Navbar />
@@ -19,6 +21,7 @@ export default function HomePage() {
           <Sidebar />
         </main>
       </div>
+      </ReduxProvider>
     </div>
   );
 }
