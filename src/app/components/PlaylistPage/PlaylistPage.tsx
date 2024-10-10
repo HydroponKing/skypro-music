@@ -21,7 +21,7 @@ interface Track {
   staredUser: number[];
 }
 
-// Пример списка треков
+
 const tracks: Track[] = [
   // ... массив с треками
 ];
