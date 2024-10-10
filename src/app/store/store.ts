@@ -1,10 +1,10 @@
 // store/store.ts
 import { configureStore } from '@reduxjs/toolkit';
-import tracksReducer from './tracksSlice';
+import currentTrackReducer from './currentTrackSlice';
 
 const store = configureStore({
   reducer: {
-    tracks: tracksReducer,
+    currentTrack: currentTrackReducer,
   },
 });
 
