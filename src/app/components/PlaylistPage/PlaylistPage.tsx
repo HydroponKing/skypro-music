@@ -21,7 +21,7 @@ interface Track {
   staredUser: number[];
 }
 
-// Пример списка треков
+
 const tracks: Track[] = [
   // ... массив с треками
 ];
@@ -40,7 +40,7 @@ const PlaylistPage: React.FC = () => {
       setCurrentTrackIndex(newIndex); // Сменить на новый трек, если индекс валидный
     }
   };
-
+  
   return (
     <div>
       {/* Список треков */}
@@ -87,7 +87,9 @@ const PlaylistPage: React.FC = () => {
           playlist={tracks} // Передаем плейлист
           currentTrackIndex={currentTrackIndex} // Передаем индекс текущего трека
           onTrackChange={handleTrackChange} // Передаем функцию смены трека
-        />
+          updatePlayingStatus={function (isPlaying: boolean): void {
+            throw new Error("Function not implemented.");
+          } }        />
       )}
     </div>
   );

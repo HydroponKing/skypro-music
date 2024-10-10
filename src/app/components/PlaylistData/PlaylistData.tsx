@@ -5,6 +5,9 @@ import Player from "../Player/Player"; // Импортируем Player для �
 import Filters from "../Filters/Filters";
 import { fetchTracks } from "../api";
 import styles from "./PlaylistData.module.css";
+import { useSelector, useDispatch } from 'react-redux';  // Импортируем хуки Redux
+import { RootState } from '../../store/store';  // Импорт типа состояния
+import { setCurrentTrack } from '../../store/currentTrackSlice';  // Импорт экшена
 
 // Интерфейс для трека
 interface Track {
@@ -25,14 +28,16 @@ interface Track {
 
 export const PlaylistData: React.FC = () => {
   const [tracks, setTracks] = useState<Track[]>([]);
-  const [currentTrackIndex, setCurrentTrackIndex] = useState<number | null>(
-    null
-  );
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const [authors, setAuthors] = useState<string[]>([]);
   const [releaseDates, setReleaseDates] = useState<string[]>([]);
   const [genres, setGenres] = useState<string[]>([]);
+  const [isPlaying, setIsPlayingStatus] = useState<boolean>(false)
+
+  const dispatch = useDispatch();  // Для отправки экшенов
+  const currentTrackIndex = useSelector((state: RootState) => state.currentTrack.trackIndex);  // Получаем индекс текущего трека из Redux
 
   useEffect(() => {
     const getTracks = async () => {
@@ -66,12 +71,12 @@ export const PlaylistData: React.FC = () => {
   }, []);
 
   const handleTrackClick = (index: number) => {
-    setCurrentTrackIndex(index); // Устанавливаем индекс выбранного трека
+    dispatch(setCurrentTrack(index)); // Устанавливаем индекс выбранного трека
   };
 
   const handleTrackChange = (newIndex: number) => {
     if (newIndex >= 0 && newIndex < tracks.length) {
-      setCurrentTrackIndex(newIndex);
+     dispatch(setCurrentTrack(newIndex));
     }
   };
 
@@ -108,6 +113,13 @@ export const PlaylistData: React.FC = () => {
                     <svg className={styles['track__title-svg']}>
                       <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
                     </svg>
+                    {currentTrackIndex == index &&(
+                      <div
+                      className={`${styles['current-track-dot']} ${
+                        isPlaying ? styles['pulsate'] : ""
+                      }`}
+                    ></div>
+                    )}
                   </div>
                   <div className={styles['track__title-text']}>
                     <span className={styles['track__title-link']}>{track.name}</span>
@@ -140,6 +152,7 @@ export const PlaylistData: React.FC = () => {
           playlist={tracks} // весь плейлист
           currentTrackIndex={currentTrackIndex} // индекс текущего трека
           onTrackChange={handleTrackChange} // функция смены трека
+          updatePlayingStatus={setIsPlayingStatus}
         />
       )}
     </div>

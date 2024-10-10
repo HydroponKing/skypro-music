@@ -18,6 +18,7 @@ interface PlayerProps {
   playlist: Track[];
   currentTrackIndex: number;
   onTrackChange: (newIndex: number) => void;
+  updatePlayingStatus: (isPlaying: boolean) => void;
 }
 
 const Player: React.FC<PlayerProps> = ({
@@ -25,12 +26,15 @@ const Player: React.FC<PlayerProps> = ({
   playlist,
   currentTrackIndex,
   onTrackChange,
+  updatePlayingStatus,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.5);
-  const [isRepeating, setIsRepeating] = useState(false); // Состояние повтора
+  const [isRepeating, setIsRepeating] = useState(false); 
+  const [isShuffling, setIsShuffling] = useState(false); // состояние перемешивания
+  
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -43,6 +47,7 @@ const Player: React.FC<PlayerProps> = ({
         audioRef.current.play();
       }
       setIsPlaying(!isPlaying);
+      updatePlayingStatus(!isPlaying);
     }
   };
 
@@ -84,34 +89,36 @@ const Player: React.FC<PlayerProps> = ({
   // Обновление трека при изменении текущего трека
   useEffect(() => {
     if (audioRef.current && currentTrack) {
-      audioRef.current.src = currentTrack.track_file;
       setIsPlaying(false);
-      audioRef.current.load();
       audioRef.current.play();
       setIsPlaying(true);
+      updatePlayingStatus(true);
     }
   }, [currentTrack]);
 
-  // Обработчик завершения трека
-  const hadleTrackEnded = () => {
-    if (audioRef.current) {
-      if (isRepeating) {
-        audioRef.current.currentTime = 0;
-        audioRef.current.play();
-      } else {
-        if (currentTrackIndex < playlist.length - 1) {
-          onTrackChange(currentTrackIndex + 1);
-        } else {
-          onTrackChange(0);
-        }
-      }
-    }
-  };
 
-  //повтор
-  const toggleRepeat = () => {
-    setIsRepeating((prev) => !prev);
-  };
+
+// Функция для переключения режима повтора
+const toggleRepeat = () => {
+  setIsRepeating((prev) => {
+    const newState = !prev;
+    if (newState) {
+      setIsShuffling(false); // Отключаем shuffle при включении repeat
+    }
+    return newState;
+  });
+};
+
+// Функция для переключения режима перемешивания
+const toggleSuffle = () => {
+  setIsShuffling((prev) => {
+    const newState = !prev;
+    if (newState) {
+      setIsRepeating(false); // Отключаем repeat при включении shuffle
+    }
+    return newState;
+  });
+};
 
   //Функция форматирования времени
   const formatTime = (time: number): string => {
@@ -119,6 +126,58 @@ const Player: React.FC<PlayerProps> = ({
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
   };
+  
+  const handlePrev = () => {
+    if (currentTrackIndex > 0) {
+      onTrackChange(currentTrackIndex - 1)
+    }
+  };
+
+    // Обработчик завершения трека с учётом shuffle
+  const handleTrackEnded = () => {
+    if (isRepeating) {
+      if (audioRef.current) {
+        audioRef.current.currentTime = 0;
+        audioRef.current.play();
+      }
+    } else if (isShuffling) { // Проверяем, активен ли shuffle
+      if (playlist.length > 0) {
+        let nextIndex = Math.floor(Math.random() * playlist.length);
+        // Убеждаемся, что следующий трек не тот же самый
+        while (nextIndex === currentTrackIndex && playlist.length > 1) {
+          nextIndex = Math.floor(Math.random() * playlist.length);
+        }
+        onTrackChange(nextIndex);
+      }
+    } else {
+      if (currentTrackIndex < playlist.length - 1) {
+        onTrackChange(currentTrackIndex + 1);
+      }/* else {
+        onTrackChange(0);
+      }*/
+    }
+  };
+
+  // функции handleNext для учёта shuffle
+  const handleNext = () => {
+    if (isShuffling) { // Проверяем, активен ли shuffle
+      if (playlist.length > 0) {
+        let nextIndex = Math.floor(Math.random() * playlist.length);
+        // Убеждаемся, что следующий трек не тот же самый
+        while (nextIndex === currentTrackIndex && playlist.length > 1) {
+          nextIndex = Math.floor(Math.random() * playlist.length);
+        }
+        onTrackChange(nextIndex);
+      }
+    } else {
+      if (currentTrackIndex < playlist.length - 1) {
+        onTrackChange(currentTrackIndex + 1);
+      } /*else {
+        onTrackChange(0);
+      }*/
+    }
+  };
+
 
   return (
     <div className="bar">
@@ -141,7 +200,7 @@ const Player: React.FC<PlayerProps> = ({
         <div className="bar__player-block">
           <div className="bar__player player">
             <div className="player__controls">
-              <div className="player__btn-prev">
+              <div className="player__btn-prev" onClick={handlePrev}>
                 <svg className="player__btn-prev-svg">
                   <use xlinkHref="img/icon/sprite.svg#icon-prev" />
                 </svg>
@@ -153,7 +212,7 @@ const Player: React.FC<PlayerProps> = ({
                   className="player__btn-icon"
                 />
               </div>
-              <div className="player__btn-next">
+              <div className="player__btn-next" onClick={handleNext}>
                 <svg className="player__btn-next-svg">
                   <use xlinkHref="img/icon/sprite.svg#icon-next" />
                 </svg>
@@ -168,7 +227,10 @@ const Player: React.FC<PlayerProps> = ({
                   <use xlinkHref="img/icon/sprite.svg#icon-repeat" />
                 </svg>
               </div>
-              <div className="player__btn-shuffle _btn-icon">
+              <div
+                className={`player__btn-shuffle _btn-icon ${isShuffling ? "active" : ""}`} // Используем обычные классы
+                onClick={toggleSuffle} // Вызываем функцию переключения shuffle
+              >
                 <svg className="player__btn-shuffle-svg">
                   <use xlinkHref="img/icon/sprite.svg#icon-shuffle" />
                 </svg>
@@ -229,7 +291,7 @@ const Player: React.FC<PlayerProps> = ({
         ref={audioRef}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
-        onEnded={hadleTrackEnded}
+        onEnded={handleTrackEnded}
         src={currentTrack?.track_file || ""}
       />
     </div>

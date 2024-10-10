@@ -805,7 +805,7 @@ body {
 }
 
 /* Цвет заливки иконки, когда кнопка активна */
-.player__btn-repeat.active .player__btn-repeat-svg {
+.player__btn-repeat.active .player__btn-repeat-svg{
   fill: #ad61ff;
   stroke: #ad61ff;
 }
@@ -831,6 +831,10 @@ body {
   height: 12px;
   fill: transparent;
   stroke: #696969;
+}
+.player__btn-shuffle.active .player__btn-shuffle-svg {
+  fill: #ad61ff;
+  stroke: #ad61ff;
 }
 
 .player__track-play {
