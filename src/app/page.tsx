@@ -5,7 +5,9 @@ import Playlist from './components/Playlist/Playlist';
 import PlaylistPage from './components/PlaylistPage/PlaylistPage';
 import ReduxProvider from './ReduxProvider';
 
+
 export default function HomePage() {
+ 
   return (
     <div className="wrapper">
       <ReduxProvider> 
@@ -21,6 +23,7 @@ export default function HomePage() {
         </main>
       </div>
       </ReduxProvider>
+ 
     </div>
   );
 }

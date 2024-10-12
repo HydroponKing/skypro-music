@@ -28,6 +28,17 @@ export const fetchTracks = async (): Promise<Track[]> => {
     throw handleError(error);
   }
 };
+// Типизация заходи...........................
+export const fetchRegistry = async (body: any): Promise<any> => {
+  try {
+    return await axios.post(
+      "https://webdev-music-003b5b991590.herokuapp.com/user/signup/",
+      body
+    );
+  } catch (error: unknown) {
+    throw handleError(error);
+  }
+};
 
 // Обработка ошибки
 const handleError = (err: unknown): Error => {
