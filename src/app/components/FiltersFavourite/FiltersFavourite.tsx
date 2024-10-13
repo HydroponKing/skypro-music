@@ -29,7 +29,7 @@ const Filters: React.FC<FiltersProps> = ({ authors, releaseDates, genres }) => {
 
   return (
     <div ref={filtersRef}>
-      <h2 className={styles.centerblock__h2}>Треки</h2>
+      <h2 className={styles.centerblock__h2}>Мои треки</h2>
       <div className={`${styles.centerblock__filter} ${styles.filter}`}>
         <div className={styles.filter__title}>Искать по:</div>
         
