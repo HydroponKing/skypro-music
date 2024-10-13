@@ -16,6 +16,7 @@
   padding: 80px !important;;
   gap: 64px;
   font-family: var(--font-geist-sans);
+  position: relative;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -106,6 +107,9 @@ a.secondary {
 .footer img {
   flex-shrink: 0;
 }
+
+
+
 
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {

@@ -1,9 +1,15 @@
 .overlay {
     position : fixed;
-    top:200px ;
-    left: 970px;
+    top: 0px;
+    left: 0px;
     bottom:0;
     right:0;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: #0000005b;
 }
 
 .container_enter {

@@ -40,6 +40,36 @@ export const fetchRegistry = async (body: any): Promise<any> => {
   }
 };
 
+export const fetchLogin = async (body: any): Promise<any> => {
+  try {
+    return await axios.post('https://webdev-music-003b5b991590.herokuapp.com/user/login/', body)
+  } catch (error: unknown) {
+    throw handleError(error);
+  }
+}
+
+export const fetchGetFavoriteTracks = async (): Promise<any> => {
+  try {
+    return await axios.get('https://webdev-music-003b5b991590.herokuapp.com/catalog/track/favorite/all/', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+  } catch (error: unknown) {
+    throw handleError(error);
+  }
+}
+
+export const fetchGetToken = async (body : any): Promise<any> => {
+  try {
+    return await axios.post('https://webdev-music-003b5b991590.herokuapp.com/user/token/',  body)
+  } catch (error: unknown) {
+    throw handleError(error);
+  }
+}
+
+
+
 // Обработка ошибки
 const handleError = (err: unknown): Error => {
   if (err instanceof Error) {

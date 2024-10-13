@@ -6,8 +6,8 @@ import Filters from "../Filters/Filters";
 import { fetchTracks } from "../api";
 import styles from "./PlaylistData.module.css";
 import { useSelector, useDispatch } from 'react-redux';  // для работы с Redux
-import { RootState } from '../../../../store/store';
-import { setCurrentTrack, setPlaylist } from '../../../../store/playlistSlice';
+import { AppDispatch, RootState } from '../../../../store/store';
+import { getFavoriteTracks, getFavoriteTracksChunk, setCurrentTrack, setPlaylist } from '../../../../store/playlistSlice';
 
 interface Track {
   _id: number;
@@ -33,10 +33,10 @@ export const PlaylistData: React.FC = () => {
   const [genres, setGenres] = useState<string[]>([]);
   const [isPlaying, setIsPlayingStatus] = useState<boolean>(false);
 
-  const dispatch = useDispatch();  // Хук для отправки экшенов в Redux
+  const dispatch = useDispatch<AppDispatch>();  // Хук для отправки экшенов в Redux
   const tracks = useSelector((state: RootState) => state.playlist.tracks);  // Получаем плейлист из Redux store
   const currentTrackIndex = useSelector((state: RootState) => state.playlist.currentTrackIndex);  // Индекс текущего трека
-
+  const favoriteTracks : any[] = useSelector(getFavoriteTracks);  // Избранные треки
   useEffect(() => {
     //  функция получен треков с API
     const getTracks = async () => {
@@ -73,6 +73,24 @@ export const PlaylistData: React.FC = () => {
     getTracks();
   }, [dispatch]); 
 
+  // Получаем favoriteTracks 
+  // ///////////////////////////////////////////////////////
+  useEffect(() => {
+    async function getFavoriteTracks(){
+      try {
+        dispatch(getFavoriteTracksChunk())
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    getFavoriteTracks()
+  }, [dispatch])
+  console.log(favoriteTracks);
+  
+  // ///////////////////////////////////////////////////////
+
+
   const handleTrackClick = (index: number) => {
     dispatch(setCurrentTrack(index)); // Устанавливаем индекс выбранного трека в Redux
   };
@@ -88,8 +106,7 @@ export const PlaylistData: React.FC = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  return (
-    <div>
+  return ( <div>
       <Filters authors={authors} releaseDates={releaseDates} genres={genres} />
 
       <div className={`${styles['content__title']} ${styles['playlist-title']}`}>
@@ -134,6 +151,10 @@ export const PlaylistData: React.FC = () => {
                 <div className={styles['track__author']}>
                   <span className={styles['track__author-link']}>{track.author}</span>
                 </div>
+                {favoriteTracks.some((favoriteTrack : any) => track._id === favoriteTrack._id)
+                  ? <svg><use xlinkHref="/img/icon/sprite.svg#icon-like"></use></svg>
+                  : <svg><use xlinkHref="/img/icon/sprite.svg#icon-dislike"></use></svg>
+                }
                 <div className={styles['track__album']}>
                   <span className={styles['track__album-link']}>{track.album}</span>
                 </div>

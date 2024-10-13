@@ -3,34 +3,48 @@
 import React from "react";
 import Image from "next/image";
 import styles from "./Sidebar.module.css"; // Импортируем CSS модуль
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getUserState } from "store/userSlice";
-import { useState } from 'react';
+import { setUser } from "store/userSlice";
+import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import Registry from "../Registry/Registry";
-import Login from "../Login/Login";
+import Login from '../Login/Login';
+
 
 export default function Sidebar() {
   const user = useSelector(getUserState)
-   const [open, setOpen] = useState(false)
-   
-
-  console.log(user);
+  const [openRegistry, setOpenRegistry] = useState(false)
+  const [openLogin, setOpenLogin] = useState(false)  
+  const dispatch = useDispatch()
   
+  function auth  (){
+    const user = JSON.parse(localStorage.getItem('user') as string);    
+    if(user){
+      dispatch(setUser(user))
+    }
+  }  
+
+  useEffect(() => {
+    auth()
+  }, [])
 
   return (
-    <aside className={`${styles['main__sidebar']} ${styles.sidebar}`}>
+    <aside className={`${styles['main__sidebar']}`}>
       <div className={styles['sidebar__personal']}>
         {user 
         ? <> 
-          <p className={styles['sidebar__personal-name']}>Sergey.Ivanov</p>
-          <div className={styles['sidebar__icon']}>
+          <p className={styles['sidebar__personal-name']}>{user.username}</p>
+          <div className={styles['sidebar__icon']} onClick={() => {localStorage.removeItem('user'); window.location.reload()}}>
             <svg>
               <use xlinkHref="/img/icon/sprite.svg#logout"></use>
             </svg>
           </div>
         </>
-        : <button onClick={() => setOpen(!open) }>Registry</button>
+        : <div>
+          <button onClick={() => setOpenRegistry(!openRegistry) }>Registry</button>
+          <button onClick={() => setOpenLogin(!openLogin) }>Login</button>
+        </div>
         }
        
       </div>
@@ -53,8 +67,8 @@ export default function Sidebar() {
           </div>
         </div>
       </div>
-           {open && createPortal(<Registry open={open} setOpen={setOpen} />, document.body)}
-           {open && createPortal(<Login open={open} setOpen={setOpen} />, document.body)}
+           {openRegistry && createPortal(<Registry open={openRegistry} setOpen={setOpenRegistry} />, document.body)}
+           {openLogin && createPortal(<Login open={openLogin} setOpen={setOpenLogin} />, document.body)}
     </aside>
   );
 }

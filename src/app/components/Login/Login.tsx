@@ -1,19 +1,21 @@
 import React, { useState } from 'react'
 import styles from './Login.module.css'
 import { useDispatch } from 'react-redux'
-import { registryThunk } from 'store/userSlice'
+import { getTokenThunk, loginThunk } from 'store/userSlice'
 import { AppDispatch } from 'store/store'
 import Image from 'next/image'
-import Link from 'next/link'
+
 
 export default function Login({open, setOpen} : {open: boolean, setOpen: (v: boolean) => void}) {
-    const [values, setValues] = useState({login: '', password: '', email: ''})
+    const [values, setValues] = useState({password: '', email: ''})
     const dispatch = useDispatch<AppDispatch>()
 
     async function handleSubmit (e : any) {
         e.preventDefault()
-        const res = await dispatch(registryThunk(values))
-        console.log(res);
+        const [userRes, tokenRes] : any[] = await Promise.all([dispatch(loginThunk(values)), dispatch(getTokenThunk(values))])
+        if(tokenRes.payload && userRes.payload) {
+            setOpen(false)
+        }
     }
 
     function handleInput (e : any) {
@@ -25,16 +27,15 @@ export default function Login({open, setOpen} : {open: boolean, setOpen: (v: boo
         <div className={styles.container_enter}>
             <div className={styles.modal__block}>
                 <form onSubmit={handleSubmit} className={styles.modal__form_login} action='#'>
-                    {/*<Link href={routes.HOME}>*/}
-                        <div className={styles.modal__logo}>
-                           <Image
-                                src='/img/logo_modal.png'
-                                alt='logo'
-                                width={140}
-                                height={21}
-                            />
-                        </div>
-                    {/*</Link>*/}
+                    <div className={styles.modal__logo}>
+                        <Image
+                            src='/img/logo_modal.png'
+                            alt='logo'
+                            width={140}
+                            height={21}
+                        />
+                    </div>
+          
                     <input
                         className={`${styles.modal__input} ${open && styles.login}`}
                         type='email'
@@ -53,13 +54,10 @@ export default function Login({open, setOpen} : {open: boolean, setOpen: (v: boo
                         onChange={handleInput}
                         autoComplete='off'
                     />
-                   {/* {error && <ErrorMsg error={error} />}*/}
-
                     <button className={styles.modal__btn_enter}>
                         Войти
                     </button>
                     <button className={styles.modal__btn_signup}>
-                       {/* <Link href={routes.REGISTER}>Зарегистрироваться</Link>*/}
                     </button>
                     <button onClick={() => setOpen(false)}>close</button>
                 </form>
