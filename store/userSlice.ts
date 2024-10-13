@@ -7,6 +7,10 @@ export const registryThunk = createAsyncThunk('user/registry', async (body : any
     return await fetchRegistry(body)
 })
 
+export const loginThunk = createAsyncThunk('user/login', async (body : any) => {
+    return await fetchRegistry(body)
+})
+
 const initialState = {
     user: null as any | null,
     error: null as any | null,

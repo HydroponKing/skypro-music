@@ -258,7 +258,6 @@ const toggleSuffle = () => {
               </div>
             </div>
           </div>
-
           {/* Громкость */}
           <div className="bar__volume-block volume">
             <div className="volume__content">

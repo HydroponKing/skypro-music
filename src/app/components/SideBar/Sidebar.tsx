@@ -8,6 +8,7 @@ import { getUserState } from "store/userSlice";
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import Registry from "../Registry/Registry";
+import Login from "../Login/Login";
 
 export default function Sidebar() {
   const user = useSelector(getUserState)
@@ -53,6 +54,7 @@ export default function Sidebar() {
         </div>
       </div>
            {open && createPortal(<Registry open={open} setOpen={setOpen} />, document.body)}
+           {open && createPortal(<Login open={open} setOpen={setOpen} />, document.body)}
     </aside>
   );
 }
