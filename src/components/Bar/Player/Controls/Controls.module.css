@@ -1,0 +1,106 @@
+.player__controls {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	padding: 0 27px 0 31px;
+}
+
+.player__btn_prev,
+.player__btn_play,
+.player__btn_next,
+.player__btn_repeat,
+.player__btn_shuffle {
+	padding: 5px;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+.player__btn_prev {
+	margin-right: 23px;
+	cursor: pointer;
+}
+
+.player__btn_prev_svg {
+	width: 15px;
+	height: 14px;
+}
+
+.player__btn_play {
+	margin-right: 23px;
+}
+
+.player__btn_play_svg {
+	width: 22px;
+	height: 20px;
+	fill: #d9d9d9;
+}
+
+.player__btn_next {
+	margin-right: 28px;
+	fill: #a53939;
+	cursor: pointer;
+}
+
+.player__btn_next_svg {
+	width: 15px;
+	height: 14px;
+	fill: inherit;
+	stroke: #d9d9d9;
+}
+
+.player__btn_repeat {
+	margin-right: 24px;
+}
+
+.player__btn_repeat_svg {
+	width: 18px;
+	height: 12px;
+	fill: transparent;
+	stroke: #696969;
+}
+
+._btn {
+	cursor: pointer;
+}
+
+._btn_icon:hover svg {
+	fill: transparent;
+	stroke: #acacac;
+	cursor: pointer;
+}
+
+._btn_icon:active svg {
+	fill: transparent;
+	stroke: #ffffff;
+	cursor: pointer;
+}
+
+.player__btn_shuffle {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+.player__btn_shuffle_svg {
+	width: 19px;
+	height: 12px;
+	fill: transparent;
+	stroke: #696969;
+}
+
+.active_btn {
+	fill: transparent;
+	stroke: #ffffff;
+	cursor: pointer;
+}
