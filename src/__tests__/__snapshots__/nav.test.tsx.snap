@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Меню навигации рендер компонента 1`] = `
+<nav
+  className="main__nav"
+>
+  <div
+    className="nav__logo"
+  >
+    <a
+      href="/"
+      onClick={[Function]}
+      onMouseEnter={[Function]}
+      onTouchStart={[Function]}
+    >
+      <img
+        alt="logo"
+        className="logo__image"
+        data-nimg="1"
+        decoding="async"
+        height={17}
+        loading="lazy"
+        onError={[Function]}
+        onLoad={[Function]}
+        src="/_next/image?url=%2Fimg%2Flogo.png&w=256&q=75"
+        srcSet="/_next/image?url=%2Fimg%2Flogo.png&w=128&q=75 1x, /_next/image?url=%2Fimg%2Flogo.png&w=256&q=75 2x"
+        style={
+          {
+            "color": "transparent",
+          }
+        }
+        width={113}
+      />
+    </a>
+  </div>
+  <div
+    className="nav__burger"
+    data-testid="burgerBtn"
+    onClick={[Function]}
+  >
+    <span
+      className="burger__line"
+    />
+    <span
+      className="burger__line"
+    />
+    <span
+      className="burger__line"
+    />
+  </div>
+</nav>
+`;

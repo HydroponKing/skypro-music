@@ -1,0 +1,232 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Плейлист рендер списка треков 1`] = `
+<div
+  className="playlist__item"
+  onClick={[Function]}
+>
+  <div
+    className="playlist__track"
+  >
+    <div
+      className="track__title"
+    >
+      <div
+        className="track__title_image"
+      >
+        <svg
+          className="track__title_svg"
+        >
+          <use
+            xlinkHref="/img/icon/sprite.svg#icon-note"
+          />
+        </svg>
+      </div>
+      <div>
+        <a
+          className="track__title_link"
+          href="#"
+        >
+          test 1
+           
+          <span
+            className="track__title_span"
+          />
+        </a>
+      </div>
+    </div>
+    <div
+      className="track__author"
+    >
+      <a
+        className="track__author_link"
+        href="#"
+      >
+        test 1
+      </a>
+    </div>
+    <div
+      className="track__album"
+    >
+      <a
+        className="track__album_link"
+        href="#"
+      >
+        test 1
+      </a>
+    </div>
+    <div
+      className="track__time"
+    >
+      <div>
+        <svg
+          className="track__time_svg dislike_jello_animation"
+        >
+          <use
+            xlinkHref="/img/icon/sprite.svg#icon-dislike"
+          />
+        </svg>
+      </div>
+      <span
+        className="track__time_text"
+      >
+        1:40
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Плейлист рендер списка треков 2`] = `
+<div
+  className="playlist__item"
+  onClick={[Function]}
+>
+  <div
+    className="playlist__track"
+  >
+    <div
+      className="track__title"
+    >
+      <div
+        className="track__title_image"
+      >
+        <svg
+          className="track__title_svg"
+        >
+          <use
+            xlinkHref="/img/icon/sprite.svg#icon-note"
+          />
+        </svg>
+      </div>
+      <div>
+        <a
+          className="track__title_link"
+          href="#"
+        >
+          test 2
+           
+          <span
+            className="track__title_span"
+          />
+        </a>
+      </div>
+    </div>
+    <div
+      className="track__author"
+    >
+      <a
+        className="track__author_link"
+        href="#"
+      >
+        test 2
+      </a>
+    </div>
+    <div
+      className="track__album"
+    >
+      <a
+        className="track__album_link"
+        href="#"
+      >
+        test 2
+      </a>
+    </div>
+    <div
+      className="track__time"
+    >
+      <div>
+        <svg
+          className="track__time_svg dislike_jello_animation"
+        >
+          <use
+            xlinkHref="/img/icon/sprite.svg#icon-dislike"
+          />
+        </svg>
+      </div>
+      <span
+        className="track__time_text"
+      >
+        3:20
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Плейлист рендер списка треков 3`] = `
+<div
+  className="playlist__item"
+  onClick={[Function]}
+>
+  <div
+    className="playlist__track"
+  >
+    <div
+      className="track__title"
+    >
+      <div
+        className="track__title_image"
+      >
+        <svg
+          className="track__title_svg"
+        >
+          <use
+            xlinkHref="/img/icon/sprite.svg#icon-note"
+          />
+        </svg>
+      </div>
+      <div>
+        <a
+          className="track__title_link"
+          href="#"
+        >
+          test 3
+           
+          <span
+            className="track__title_span"
+          />
+        </a>
+      </div>
+    </div>
+    <div
+      className="track__author"
+    >
+      <a
+        className="track__author_link"
+        href="#"
+      >
+        test 3
+      </a>
+    </div>
+    <div
+      className="track__album"
+    >
+      <a
+        className="track__album_link"
+        href="#"
+      >
+        test 3
+      </a>
+    </div>
+    <div
+      className="track__time"
+    >
+      <div>
+        <svg
+          className="track__time_svg dislike_jello_animation"
+        >
+          <use
+            xlinkHref="/img/icon/sprite.svg#icon-dislike"
+          />
+        </svg>
+      </div>
+      <span
+        className="track__time_text"
+      >
+        5:00
+      </span>
+    </div>
+  </div>
+</div>
+`;
