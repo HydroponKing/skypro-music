@@ -7,7 +7,6 @@ import { useAppDispatch, useAppSelector } from '@/store/store'
 import { routes } from '@/lib/routes'
 import { logout } from '@/store/features/userSlice'
 import { useInitLikedTracks } from '@/hooks/useInitLikedTracks'
-import { clearFavorite } from '@/store/features/playlistSlice'
 
 export default function SidebarPersonal() {
 	useInitLikedTracks()
@@ -17,7 +16,6 @@ export default function SidebarPersonal() {
 
 	const onLogout = () => {
 		dispatch(logout())
-		dispatch(clearFavorite())
 		router.push(routes.HOME)
 	}
 

@@ -69,9 +69,6 @@ const playlistSlice = createSlice({
 
 			state.favoritePlaylist = filterNoFavorite
 		},
-		clearFavorite: (state) => {
-			state.favoritePlaylist = []
-		},
 		setPrevTrack: state => {
 			const playlist = state.isShuffle
 				? state.shufflePlaylist
@@ -181,6 +178,5 @@ export const {
 	setOrderData,
 	setGenre,
 	resetFilterOptions,
-	clearFavorite
 } = playlistSlice.actions
 export const playlistReducer = playlistSlice.reducer
