@@ -1,0 +1,41 @@
+.filterWrapper {
+	position: relative;
+}
+
+.filter__button {
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 24px;
+	border: 1px solid #ffffff;
+	border-radius: 60px;
+	padding: 6px 20px;
+
+	&:not(:nth-child(2)) {
+		margin-right: 10px;
+	}
+
+	&:hover {
+		border-color: #d9b6ff;
+		color: #d9b6ff;
+		cursor: pointer;
+	}
+}
+
+.filter__counter {
+	position: absolute;
+	top: -8px;
+	right: 4px;
+	width: 26px;
+	height: 26px;
+	border-radius: 50%;
+	background-color: #ad61ff;
+	align-content: center;
+	text-align: center;
+}
+
+._btn_active {
+	border-color: #ad61ff;
+	color: #ad61ff;
+	cursor: pointer;
+}

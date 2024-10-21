@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Страница авторизации Рендер элементов на странице рендер компонента 1`] = `
+<div
+  className="wrapper"
+>
+  <div
+    className="container_enter"
+  >
+    <div
+      className="modal__block"
+    >
+      <form
+        action="#"
+        className="modal__form_login"
+        onSubmit={[Function]}
+      >
+        <a
+          href="/"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+          onTouchStart={[Function]}
+        >
+          <div
+            className="modal__logo"
+          >
+            <img
+              alt="logo"
+              data-nimg="1"
+              decoding="async"
+              height={21}
+              loading="lazy"
+              onError={[Function]}
+              onLoad={[Function]}
+              src="/_next/image?url=%2Fimg%2Flogo_modal.png&w=384&q=75"
+              srcSet="/_next/image?url=%2Fimg%2Flogo_modal.png&w=256&q=75 1x, /_next/image?url=%2Fimg%2Flogo_modal.png&w=384&q=75 2x"
+              style={
+                {
+                  "color": "transparent",
+                }
+              }
+              width={140}
+            />
+          </div>
+        </a>
+        <input
+          className="modal__input login"
+          name="email"
+          onChange={[Function]}
+          placeholder="Почта"
+          type="email"
+          value=""
+        />
+        <input
+          autoComplete="off"
+          className="modal__input"
+          name="password"
+          onChange={[Function]}
+          placeholder="Пароль"
+          type="password"
+          value=""
+        />
+        <button
+          className="modal__btn_enter"
+        >
+          Войти
+        </button>
+        <button
+          className="modal__btn_signup"
+        >
+          <a
+            href="/signup"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+            onTouchStart={[Function]}
+          >
+            Зарегистрироваться
+          </a>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+`;

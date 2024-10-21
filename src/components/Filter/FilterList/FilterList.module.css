@@ -1,0 +1,48 @@
+.filterList {
+	min-width: 221px;
+	min-height: 196px;
+	background-color: #313131;
+	border-radius: 12px;
+	padding: 34px;
+	position: absolute;
+	top: 50px;
+	left: 0;
+}
+
+.listItems {
+	max-width: 180px;
+	max-height: 237px;
+	display: flex;
+	flex-direction: column;
+	gap: 28px;
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	&::-webkit-scrollbar {
+		width: 4px;
+		background-color: #4b4949;
+		border-radius: 10px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: #ffffff;
+		border-radius: 10px;
+	}
+}
+
+.listItem {
+	font-size: 18px;
+	line-height: 24px;
+
+	&:hover {
+		color: #b672ff;
+		cursor: pointer;
+	}
+}
+
+.activeListItem {
+	text-decoration: underline 2px;
+	text-underline-offset: 4px;
+	color: #b672ff;
+	cursor: pointer;
+}

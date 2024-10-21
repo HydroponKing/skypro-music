@@ -1,0 +1,73 @@
+.wrapper {
+	width: 100%;
+	min-height: 100%;
+	overflow: hidden;
+	background-color: #383838;
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	max-width: 1920px;
+	height: 100vh;
+	margin: 0 auto;
+	position: relative;
+	background-color: #181818;
+}
+
+.error {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 472px;
+	height: 406px;
+	border-radius: 12px;
+	background-color: #ffffff;
+	position: absolute;
+
+	&::before {
+		content: url('/img/smile_sad.png');
+		top: 0;
+	}
+}
+
+.error__title {
+	font-size: 32px;
+	font-weight: 600;
+	line-height: 38px;
+	color: #000000;
+	text-align: center;
+}
+
+.error__subtitle {
+	max-width: 303px;
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 24px;
+	color: #000000;
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 36px;
+}
+
+.error__retryBtn {
+	width: 178px;
+	height: 52px;
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 24px;
+	color: #ffffff;
+	background-color: #580ea2;
+	border-radius: 6px;
+	border: none;
+
+	&:hover {
+		background-color: #3f007d;
+	}
+
+	&:active {
+		background-color: #271a58;
+	}
+}
